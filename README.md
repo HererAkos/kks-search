@@ -15,7 +15,6 @@ Ipari berendezések keresése és nyilvántartása mobilon.
 Nyisd meg a weboldalt és add hozzá a kezdőképernyőhöz:
 
 **iPhone:** Safari → Megosztás → Hozzáadás a kezdőképernyőhöz
-**Android:** Chrome → Menü (⋮) → Hozzáadás a kezdőképernyőhöz
 
 ## Telepítés
 
