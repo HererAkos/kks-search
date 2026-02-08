@@ -1,0 +1,3877 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1565C0">
+    <link rel="manifest" href="manifest.json">
+    <title>KKS Kereső</title>
+    <style>
+        :root {
+            /* Standard Dark Mode */
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-tertiary: #252525;
+            --bg-quaternary: #2a2a2a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #999;
+            --border-color: #333;
+            --accent-color: #64b5f6;
+            --button-primary: #1a73e8;
+        }
+        
+        body.oled-theme {
+            /* OLED Optimized - True Black */
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #111111;
+            --bg-quaternary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #aaaaaa;
+            --border-color: #222222;
+            --accent-color: #4a9eff;
+            --button-primary: #1a73e8;
+        }
+        
+        body.light-theme {
+            --bg-primary: #d8d8d8;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #ffffff;
+            --bg-quaternary: #f5f5f5;
+            --text-primary: #2c2c2c;
+            --text-secondary: #666666;
+            --border-color: #d0d0d0;
+            --accent-color: #1a73e8;
+            --button-primary: #1a73e8;
+        }
+        
+        body.light-theme {
+            background: #d8d8d8;
+        }
+        
+        body.light-theme .phone-frame {
+            background: #f0f0f0;
+        }
+        
+        body.light-theme .screen {
+            background: #f8f8f8;
+        }
+        
+        body.light-theme .search-section {
+            background: #f8f8f8;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        body.light-theme .search-input {
+            background: #ffffff;
+            border-color: #d0d0d0;
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .search-input::placeholder {
+            color: #666;
+        }
+        
+        body.light-theme .search-hint,
+        body.light-theme .long-press-hint,
+        body.light-theme .breadcrumb {
+            color: #666;
+            background: #ffffff;
+        }
+        
+        body.light-theme .result-item,
+        body.light-theme .equipment-item {
+            background: #ffffff;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        body.light-theme .result-kks,
+        body.light-theme .equipment-kks {
+            color: #1a73e8;
+        }
+        
+        body.light-theme .result-name,
+        body.light-theme .equipment-name,
+        body.light-theme .hierarchy-title {
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .result-path,
+        body.light-theme .hierarchy-subtitle {
+            color: #666;
+        }
+        
+        body.light-theme .hierarchy-item {
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        
+        body.light-theme .hierarchy-header {
+            background: #ffffff;
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .hierarchy-header:active,
+        body.light-theme .child-item:active {
+            background: #f0f0f0;
+        }
+        
+        body.light-theme .hierarchy-children {
+            background: #fafafa;
+        }
+        
+        body.light-theme .child-item {
+            background: #fafafa;
+            border-top: 1px solid #d0d0d0;
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .bottom-nav {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        body.light-theme .nav-item {
+            color: #666;
+        }
+        
+        body.light-theme .nav-item.active {
+            color: #1a73e8;
+        }
+        
+        body.light-theme .edit-card {
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        
+        body.light-theme .back-button {
+            background: #ffffff;
+            border-bottom: 1px solid #d0d0d0;
+            color: #1a73e8;
+        }
+        
+        body.light-theme .back-button-search {
+            background: #e8e8e8;
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .empty-placeholder {
+            background: #ffffff;
+            border-bottom: 1px solid #d0d0d0;
+            color: #999;
+        }
+        
+        body.light-theme .modal-content {
+            background: #ffffff;
+        }
+        
+        body.light-theme .modal-title,
+        body.light-theme .form-label {
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .modal-btn.cancel {
+            background: #e8e8e8;
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .modal-btn.save {
+            background: #1a73e8;
+            color: white;
+        }
+        
+        body.light-theme .form-input,
+        body.light-theme .form-select {
+            background: #fafafa;
+            border-color: #d0d0d0;
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .context-menu {
+            background: #ffffff;
+            border-color: #d0d0d0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        body.light-theme .context-menu-item {
+            color: #2c2c2c;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        body.light-theme .edit-card-title {
+            color: #1a73e8;
+        }
+        
+        body.light-theme .hierarchy-header::after {
+            color: #2c2c2c !important;
+        }
+        
+        body.light-theme .add-item-button,
+        body.light-theme .add-button {
+            background: #1a73e8;
+            color: white;
+        }
+        
+        body.light-theme .detail-modal-content {
+            background: #ffffff;
+        }
+        
+        body.light-theme .detail-modal-row {
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        body.light-theme .detail-modal-label {
+            color: #666;
+        }
+        
+        body.light-theme .detail-modal-value {
+            color: #2c2c2c;
+        }
+        
+        body.light-theme .detail-modal {
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        body.light-theme .detail-modal-header {
+            color: #1a73e8;
+        }
+        
+        body.light-theme .chevron {
+            color: #666 !important;
+        }
+        
+        body.light-theme .hierarchy-add-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        body.light-theme .hierarchy-add-text {
+            color: #666;
+        }
+        
+        body.light-theme .hierarchy-row-wrapper {
+            background: #ffffff;
+        }
+        
+        body.light-theme .hierarchy-add-item-btn {
+            color: #1a73e8;
+        }
+        
+        body.light-theme .equipment-header-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        body.light-theme .equipment-header-text {
+            color: #666;
+        }
+        
+        body.light-theme .equipment-kks-code {
+            color: #1a73e8;
+        }
+        
+        body.light-theme .equipment-name-text {
+            color: #2c2c2c;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ============= OLED THEME OVERRIDES ============= */
+        body.oled-theme {
+            background: #000000;
+        }
+        
+        body.oled-theme .phone-frame {
+            background: #000000;
+        }
+        
+        body.oled-theme .screen {
+            background: #000000;
+        }
+        
+        body.oled-theme .search-section {
+            background: #000000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        body.oled-theme .result-item,
+        body.oled-theme .equipment-item {
+            background: #000000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        body.oled-theme .hierarchy-item {
+            background: var(--bg-secondary);
+        }
+        
+        body.oled-theme .hierarchy-header {
+            background: var(--bg-secondary);
+        }
+        
+        body.oled-theme .hierarchy-children {
+            background: var(--bg-tertiary);
+        }
+        
+        body.oled-theme .child-item {
+            background: var(--bg-tertiary);
+        }
+        
+        body.oled-theme .hierarchy-row-wrapper {
+            background: var(--bg-secondary);
+        }
+        
+        body.oled-theme .hierarchy-add-bar {
+            background: var(--bg-tertiary);
+        }
+        
+        body.oled-theme .equipment-header-bar {
+            background: var(--bg-quaternary);
+        }
+        
+        body.oled-theme .modal-content {
+            background: var(--bg-secondary);
+        }
+        
+        body.oled-theme .detail-modal-content {
+            background: var(--bg-secondary);
+        }
+        
+        body.oled-theme .settings-card {
+            background: var(--bg-secondary);
+        }
+        
+        body.oled-theme .stat-item {
+            background: var(--bg-tertiary);
+        }
+        
+        body.oled-theme .edit-card {
+            background: var(--bg-secondary);
+        }
+        
+        body.oled-theme .context-menu {
+            background: var(--bg-secondary);
+        }
+        
+        .offline-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 152, 0, 0.95);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 9999;
+            animation: slideInFromTop 0.3s ease-out;
+            transition: all 0.3s;
+        }
+        
+        .offline-indicator.online {
+            background: rgba(76, 175, 80, 0.95);
+        }
+        
+        .offline-indicator.hidden {
+            display: none;
+        }
+        
+        @keyframes slideInFromTop {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .offline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a url('huha_hatter.jpg') center center no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .phone-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            overflow: hidden;
+        }
+        
+        .status-bar {
+            display: none;
+        }
+        
+        .app-header {
+            background: #1565c0;
+            color: white;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .app-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .search-section {
+            padding: 16px;
+            background: #0d0d0d;
+            border-bottom: 1px solid #222;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 40px 12px 16px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .search-input:focus {
+            border-color: #1a73e8;
+        }
+        
+        .search-input::placeholder {
+            color: #888;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .search-hint {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 56px;
+            background: #0d0d0d;
+            border-top: 1px solid #222;
+            display: flex;
+            z-index: 1;
+            padding: 0 15%;
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: none;
+            background: none;
+            color: #999;
+        }
+        
+        .nav-item:active {
+            background: #2a2a2a;
+        }
+        
+        .nav-item.active {
+            color: #64b5f6;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-label {
+            font-size: 11px;
+            letter-spacing: -0.5px;
+        }
+        
+        .hierarchy-section {
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+        
+        .hierarchy-item {
+            background: #0d0d0d;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .hierarchy-header {
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            background: #1e1e1e;
+            width: 100%;
+            text-align: left;
+            color: #e0e0e0;
+        }
+        
+        .hierarchy-header:active {
+            background: #2a2a2a;
+        }
+        
+        .hierarchy-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #e0e0e0;
+        }
+        
+        .hierarchy-subtitle {
+            font-size: 13px;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .chevron {
+            color: #777;
+            transition: transform 0.3s;
+        }
+        
+        .chevron.expanded {
+            transform: rotate(180deg);
+        }
+        
+        .hierarchy-add-bar {
+            padding: 12px 16px;
+            background: #252525;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .hierarchy-add-text {
+            color: #999;
+            font-size: 13px;
+        }
+        
+        .hierarchy-add-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hierarchy-row-wrapper {
+            display: flex;
+            align-items: center;
+            background: #1e1e1e;
+        }
+        
+        .hierarchy-flex-header {
+            flex: 1;
+            padding-right: 8px;
+        }
+        
+        .hierarchy-add-item-btn {
+            background: transparent;
+            color: #64b5f6;
+            border: none;
+            padding: 14px 16px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .breadcrumb-with-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .breadcrumb-add-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .equipment-header-bar {
+            padding: 8px 16px;
+            background: #2a2a2a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        
+        .equipment-header-text {
+            color: #999;
+            font-size: 13px;
+        }
+        
+        .equipment-add-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .equipment-detail-item {
+            padding: 10px 16px 10px 32px;
+            cursor: pointer;
+        }
+        
+        .equipment-kks-code {
+            color: #64b5f6;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .equipment-name-text {
+            color: #e0e0e0;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+        
+        .empty-equipment {
+            padding: 12px 32px;
+        }
+        
+        .hierarchy-children {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #252525;
+        }
+        
+        .hierarchy-children.expanded {
+            max-height: 1000px;
+        }
+        
+        .child-item {
+            padding: 12px 16px 12px 32px;
+            border-top: 1px solid #333;
+            cursor: pointer;
+            background: #252525;
+            border: none;
+            width: 100%;
+            text-align: left;
+            color: #e0e0e0;
+        }
+        
+        .child-item:active {
+            background: #2a2a2a;
+        }
+        
+        .search-results {
+            display: none;
+        }
+        
+        .search-results.active {
+            display: block;
+        }
+        
+        .result-item {
+            background: #0d0d0d;
+            padding: 14px 16px;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .result-item:active {
+            background: #2a2a2a;
+        }
+        
+        .result-kks {
+            font-size: 13px;
+            color: #64b5f6;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .result-name {
+            font-size: 16px;
+            color: #e0e0e0;
+            margin-bottom: 6px;
+        }
+        
+        .result-path {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .screen {
+            display: none;
+            height: calc(100vh - 56px - 60px);
+            height: calc(-webkit-fill-available - 56px - 60px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 20px;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .back-button {
+            padding: 12px 16px;
+            background: #1e1e1e;
+            border: none;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            color: #64b5f6;
+            width: 100%;
+        }
+        
+        .back-button:active {
+            background: #2a2a2a;
+        }
+        
+        .breadcrumb {
+            padding: 12px 16px;
+            background: #252525;
+            font-size: 13px;
+            color: #999;
+            border-bottom: 1px solid #333;
+        }
+        
+        .equipment-item {
+            background: #1e1e1e;
+            padding: 14px 16px;
+            border-bottom: 1px solid #333;
+            position: relative;
+        }
+        
+        .equipment-kks {
+            font-size: 13px;
+            color: #64b5f6;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .equipment-name {
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+        
+        .empty-placeholder {
+            padding: 14px 16px;
+            background: #1e1e1e;
+            border-bottom: 1px solid #333;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Context Menu */
+        .context-menu {
+            position: fixed;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            min-width: 150px;
+        }
+        
+        .context-menu.active {
+            display: block;
+        }
+        
+        .context-menu-item {
+            padding: 12px 16px;
+            color: #e0e0e0;
+            cursor: pointer;
+            border-bottom: 1px solid #333;
+        }
+        
+        .context-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .context-menu-item:hover {
+            background: #333;
+        }
+        
+        .context-menu-item.delete {
+            color: #ff6b6b;
+        }
+        
+        /* Edit Screen */
+        .edit-section {
+            padding: 0;
+            padding-bottom: 20px;
+        }
+        
+        .edit-nav-screen {
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .edit-nav-screen.active {
+            display: block;
+        }
+        
+        .add-button {
+            width: 100%;
+            padding: 14px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        
+        .add-button:active {
+            background: #1557b0;
+        }
+        
+        .edit-card {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .edit-card-title {
+            color: #64b5f6;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .edit-list {
+            background: transparent;
+            border-radius: 0;
+            overflow: visible;
+            margin: 0;
+        }
+        
+        .edit-list-item {
+            padding: 14px 16px;
+            border-bottom: none;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .edit-list-item:last-child {
+            border-bottom: none;
+            margin-bottom: 8px;
+        }
+        
+        body.light-theme .edit-list-item {
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        
+        .edit-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .edit-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .edit-btn.edit {
+            background: #1a73e8;
+            color: white;
+        }
+        
+        .edit-btn.delete {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        /* Edit Tabs */
+        .edit-tabs-nav {
+            display: flex;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        
+        .edit-tabs-nav::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .edit-tab {
+            flex: 1;
+            min-width: 90px;
+            padding: 14px 8px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .edit-tab.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+        
+        .edit-tab:active {
+            background: var(--bg-tertiary);
+        }
+        
+        .edit-tab-content {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .edit-tab-content.active {
+            display: block;
+        }
+        
+        .add-button-large {
+            width: calc(100% - 32px);
+            margin: 16px;
+            padding: 14px;
+            background: var(--button-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .add-button-large:active {
+            opacity: 0.8;
+        }
+        
+        .data-button {
+            width: calc(100% - 32px);
+            margin: 0 16px 12px 16px;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .data-button:active {
+            opacity: 0.8;
+        }
+        
+        .data-button.export {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .data-button.import {
+            background: #51cf66;
+            color: white;
+        }
+        
+        /* Settings Screen */
+        .settings-section {
+            padding: 16px;
+        }
+        
+        .settings-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        body.light-theme .settings-card {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+        }
+        
+        body.light-theme .stat-item {
+            background: #ffffff;
+            border: 1.5px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+        }
+        
+        body.light-theme .stat-item:hover {
+            border-color: #d0d0d0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08), 0 2px 3px rgba(0,0,0,0.06);
+        }
+        
+        .settings-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .stat-item {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+        
+        .setting-info {
+            flex: 1;
+        }
+        
+        .setting-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .setting-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 8px;
+            transition: transform 0.2s ease;
+            line-height: 1;
+            outline: none;
+        }
+        
+        .theme-toggle-btn:hover {
+            transform: scale(1.15);
+        }
+        
+        .theme-toggle-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .theme-toggle-btn .toggle-emoji {
+            display: block;
+        }
+        
+        .settings-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: 15px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        
+        .settings-button:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+        
+        .settings-button span {
+            font-size: 28px;
+        }
+        
+        .settings-button-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .settings-button-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .settings-button.export {
+            border: 2px solid #ff6b6b;
+        }
+        
+        .settings-button.import {
+            border: 2px solid #51cf66;
+        }
+        
+        .settings-footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 13px;
+            padding: 20px;
+        }
+        
+        .biblical-quote-container {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .biblical-quote {
+            font-size: 12px;
+            color: var(--text-primary);
+            font-style: italic;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeInOut 8s ease-in-out infinite;
+            text-align: center;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(5px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-5px); }
+        }
+        
+        .jesus-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            padding: 4px;
+            background: #1a1a1a;
+            transition: background 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        body.light-theme .jesus-icon {
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            max-width: 340px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-title {
+            color: #e0e0e0;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+        
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-size: 15px;
+            outline: none;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            border-color: #1a73e8;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .modal-btn.cancel {
+            background: #333;
+            color: #e0e0e0;
+        }
+        
+        .modal-btn.save {
+            background: #1a73e8;
+            color: white;
+        }
+        
+        /* Detail Modal */
+        .detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        .detail-modal.active {
+            display: flex;
+        }
+        
+        .detail-modal-content {
+            background: #1e1e1e;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 90%;
+            width: 350px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+        
+        .detail-modal-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #64b5f6;
+            margin-bottom: 16px;
+        }
+        
+        .detail-modal-row {
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .detail-modal-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-modal-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+        
+        .detail-modal-value {
+            font-size: 15px;
+            color: #e0e0e0;
+        }
+        
+        .back-button-search {
+            padding: 8px 16px;
+            background: #333;
+            color: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 12px;
+        }
+        
+        /* PWA Install Banner */
+        .install-banner {
+            position: fixed;
+            bottom: 70px;
+            left: 16px;
+            right: 16px;
+            background: #1565c0;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .install-banner.show {
+            display: flex;
+        }
+        
+        .install-banner-content {
+            flex: 1;
+        }
+        
+        .install-banner-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        
+        .install-banner-text {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .install-banner-btn {
+            background: white;
+            color: #1565c0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .install-banner-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Login Screen -->
+    <div id="loginScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('huha_hatter.jpg') center center no-repeat; background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000;">
+        <div id="loginBox" style="background: rgba(30, 30, 30, 0.95); padding: 40px; border-radius: 16px; box-shadow: 0 10px 50px rgba(0,0,0,0.5); text-align: center; max-width: 320px; width: 90%;">
+            <div style="font-size: 48px; margin-bottom: 20px;">🔒</div>
+            <h2 style="color: #e0e0e0; margin-bottom: 10px; font-size: 24px;">KKS Kereső</h2>
+            <p style="color: #999; margin-bottom: 30px; font-size: 14px;">Kérlek add meg a jelszót</p>
+            <input type="password" id="passwordInput" placeholder="Jelszó" readonly onfocus="this.removeAttribute('readonly');" style="width: 100%; padding: 14px; background: #2a2a2a; border: 2px solid #444; border-radius: 8px; color: #e0e0e0; font-size: 16px; margin-bottom: 20px; outline: none; box-sizing: border-box;" />
+            <button onclick="checkPassword()" style="width: 100%; padding: 14px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">Belépés</button>
+            <div id="errorMessage" style="color: #ff6b6b; margin-top: 15px; font-size: 14px; display: none;">❌ Hibás jelszó!</div>
+        </div>
+    </div>
+    
+    <script>
+        // Password check - inline before main app
+        // VERSION: 2026-02-04-FIX-FINAL
+        const CORRECT_PASSWORD = '2344';
+        let passwordCheckAttempts = 0;
+        
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('errorMessage');
+            
+            if (input.value === CORRECT_PASSWORD) {
+                sessionStorage.setItem('authenticated', 'true');
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                
+                // Poll for initApp
+                const waitInit = setInterval(() => {
+                    passwordCheckAttempts++;
+                    if (typeof initApp === 'function') {
+                        clearInterval(waitInit);
+                        initApp();
+                    } else if (passwordCheckAttempts > 200) {
+                        clearInterval(waitInit);
+                        console.error('initApp not loaded!');
+                    }
+                }, 50);
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.style.borderColor = '#ff6b6b';
+                setTimeout(() => {
+                    input.style.borderColor = '#444';
+                    error.style.display = 'none';
+                }, 2000);
+            }
+        }
+        
+        // Enter key support
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+    </script>
+    
+    <div class="phone-frame" id="mainApp" style="display: none;">
+        <!-- Offline Indicator -->
+        <div class="offline-indicator hidden" id="offlineIndicator">
+            <div class="offline-dot"></div>
+            <span id="offlineText">Offline mód</span>
+        </div>
+        
+        <div class="status-bar">
+            <span id="currentTime">14:30</span>
+            <span>📶 🔋</span>
+        </div>
+        
+        <div class="app-header">
+            <div class="app-title">KKS Kereső</div>
+        </div>
+        
+        <!-- Kereső Képernyő -->
+        <div class="screen active" id="searchScreen">
+            <div class="search-section">
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <button class="back-button-search" id="searchBackButton" onclick="clearSearch()" style="display: none;">← Vissza</button>
+                </div>
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="KKS kód vagy berendezés neve..."
+                        id="searchInput"
+                    >
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="search-hint">Pl.: "13ETG10" vagy "szivattyú"</div>
+            </div>
+            
+            <div class="search-results" id="searchResults">
+            </div>
+            
+            <div class="empty-state" id="emptyState">
+                <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
+                <div>Írj be egy KKS kódot vagy<br>berendezés nevet a kereséshez</div>
+            </div>
+        </div>
+        
+        <!-- Hierarchia Képernyő -->
+        <div class="screen" id="hierarchyScreen">
+            <div id="hierarchyContent"></div>
+        </div>
+        
+        <!-- Szerkesztés Képernyő -->
+        <div class="screen" id="editScreen">
+            <!-- Edit Navigation - Rooms List -->
+            <div class="edit-nav-screen active" id="editNavRooms">
+                <div class="edit-section">
+                    <button class="add-button-large" onclick="openAddModal('room')">+ Új Kapcsolótér</button>
+                    <div class="edit-list" id="editRoomsList"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Beállítások Képernyő -->
+        <div class="screen" id="settingsScreen">
+            <div class="settings-section">
+                <!-- Statisztika -->
+                <div class="settings-card">
+                    <div class="settings-card-title">📊 Statisztika</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon">🏢</div>
+                            <div class="stat-value" id="statRooms">0</div>
+                            <div class="stat-label">Kapcsolótér</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">📦</div>
+                            <div class="stat-value" id="statDistributors">0</div>
+                            <div class="stat-label">Elosztó</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">🔌</div>
+                            <div class="stat-value" id="statBranches">0</div>
+                            <div class="stat-label">Leágazás</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">⚙️</div>
+                            <div class="stat-value" id="statEquipment">0</div>
+                            <div class="stat-label">Berendezés</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Megjelenés -->
+<div class="settings-card">
+                    <div class="settings-card-title">🎨 Megjelenés</div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-name">Téma</div>
+                            <div class="setting-description">Válassz a megjelenési módok közül</div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;">
+                        <button class="theme-option-btn" id="themeLightBtn" onclick="setTheme('light')" style="padding: 12px 8px; background: var(--bg-tertiary); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 20px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
+                            <span>☀️</span>
+                            <span style="font-size: 11px;">Világos</span>
+                        </button>
+                        <button class="theme-option-btn active" id="themeDarkBtn" onclick="setTheme('dark')" style="padding: 12px 8px; background: var(--bg-tertiary); border: 2px solid var(--accent-color); border-radius: 8px; color: var(--text-primary); font-size: 20px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
+                            <span>🌙</span>
+                            <span style="font-size: 11px;">Sötét</span>
+                        </button>
+                        <button class="theme-option-btn" id="themeOledBtn" onclick="showOledTip(); setTheme('oled')" style="padding: 12px 8px; background: var(--bg-tertiary); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 20px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
+                            <span>⚫</span>
+                            <span style="font-size: 11px;">OLED</span>
+                        </button>
+                    </div>
+                    <div id="oledTip" style="display: none; font-size: 12px; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: var(--bg-tertiary); border-radius: 6px; animation: fadeIn 0.3s ease;">
+                        💡 <strong>OLED mód:</strong> Akkumulátor kímélő true black háttér OLED/AMOLED kijelzőkhöz
+                    </div>
+                </div>
+                
+                <!-- Adatok kezelése -->
+                <div class="settings-card">
+                    <div class="settings-card-title">💾 Adatok kezelése</div>
+                    <button class="settings-button export" onclick="exportData()">
+                        <span>📤</span>
+                        <div>
+                            <div class="settings-button-title">Adatok exportálása</div>
+                            <div class="settings-button-desc">JSON fájl letöltése</div>
+                        </div>
+                    </button>
+                    <button class="settings-button import" onclick="document.getElementById('importFileInput').click()">
+                        <span>📥</span>
+                        <div>
+                            <div class="settings-button-title">Adatok importálása</div>
+                            <div class="settings-button-desc">JSON fájl feltöltése</div>
+                        </div>
+                    </button>
+                    <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importDataFromFile(this)" />
+                </div>
+                
+                <!-- Verzió info -->
+                <div class="settings-footer">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                        <img src="jesus.png" alt="🙏" class="jesus-icon">
+                        <div>KKS Kereső v1.0</div>
+                        <img src="jesus.png" alt="🙏" class="jesus-icon">
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">© 2026</div>
+                    
+                    <!-- Bibliai idézetek -->
+                    <div class="biblical-quote-container">
+                        <div class="biblical-quote" id="biblicalQuote">
+                            🕊️ Bibliai idézetek töltődnek... 🕊️
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Alsó navigáció -->
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab(0, this)">
+                <div class="nav-icon">🔍</div>
+                <div class="nav-label">Keresés</div>
+            </button>
+            <button class="nav-item" onclick="switchTab(1, this)">
+                <div class="nav-icon">📋</div>
+                <div class="nav-label">Hierarchia</div>
+            </button>
+            <button class="nav-item" onclick="switchTab(2, this)">
+                <div class="nav-icon">✏️</div>
+                <div class="nav-label">Szerkesztés</div>
+            </button>
+            <button class="nav-item" onclick="switchTab(3, this)">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-label">Beállítások</div>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" onclick="editFromContext()">✏️ Szerkesztés</div>
+        <div class="context-menu-item delete" onclick="deleteFromContext()">🗑️ Törlés</div>
+    </div>
+    
+    <!-- Add/Edit Modal -->
+    <div class="modal" id="addEditModal">
+        <div class="modal-content">
+            <div class="modal-title" id="modalTitle">Új elem hozzáadása</div>
+            <div id="modalForm"></div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closeModal()">Mégse</button>
+                <button class="modal-btn save" onclick="saveModal()">Mentés</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Detail Modal -->
+    <div class="detail-modal" id="detailModal" onclick="closeDetailModal()">
+        <div class="detail-modal-content" onclick="event.stopPropagation()">
+            <div class="detail-modal-header" id="detailModalTitle"></div>
+            <div id="detailModalContent"></div>
+        </div>
+    </div>
+    
+    <!-- PWA Install Banner -->
+    <div class="install-banner" id="installBanner">
+        <div class="install-banner-content">
+            <div class="install-banner-title">📱 Telepítsd az appot!</div>
+            <div class="install-banner-text">Gyorsabb, offline is működik</div>
+        </div>
+        <button class="install-banner-btn" id="installBtn">Telepítés</button>
+        <button class="install-banner-close" id="installClose">✕</button>
+    </div>
+    
+    <script>
+        // ============= THEME MANAGEMENT =============
+        function showOledTip() {
+            const tip = document.getElementById('oledTip');
+            if (tip) {
+                tip.style.display = 'block';
+                // Auto-hide after 4 seconds
+                setTimeout(() => {
+                    tip.style.display = 'none';
+                }, 4000);
+            }
+        }
+        
+        function setTheme(theme) {
+            const body = document.body;
+            
+            // Get or create theme-color meta tag
+            let metaThemeColor = document.querySelector("meta[name='theme-color']");
+            if (!metaThemeColor) {
+                metaThemeColor = document.createElement('meta');
+                metaThemeColor.name = 'theme-color';
+                document.head.appendChild(metaThemeColor);
+            }
+            
+            // Get or create apple status bar meta tag
+            let appleStatusBar = document.querySelector("meta[name='apple-mobile-web-app-status-bar-style']");
+            if (!appleStatusBar) {
+                appleStatusBar = document.createElement('meta');
+                appleStatusBar.name = 'apple-mobile-web-app-status-bar-style';
+                document.head.appendChild(appleStatusBar);
+            }
+            
+            // Remove all theme classes
+            body.classList.remove('light-theme', 'oled-theme');
+            
+            // Apply selected theme
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+                metaThemeColor.content = '#1565C0'; // Kék header
+                appleStatusBar.content = 'default';
+            } else if (theme === 'oled') {
+                body.classList.add('oled-theme');
+                metaThemeColor.content = '#1565C0'; // Kék header
+                appleStatusBar.content = 'black-translucent';
+            } else {
+                // dark (default)
+                metaThemeColor.content = '#1565C0'; // Kék header
+                appleStatusBar.content = 'black-translucent';
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('theme', theme);
+            
+            // Update button states
+            updateThemeButtons(theme);
+            
+            // Update statistics if needed
+            if (typeof updateStatistics === 'function') {
+                updateStatistics();
+            }
+        }
+        
+        function updateThemeButtons(theme) {
+            const buttons = {
+                light: document.getElementById('themeLightBtn'),
+                dark: document.getElementById('themeDarkBtn'),
+                oled: document.getElementById('themeOledBtn')
+            };
+            
+            // Remove active class from all
+            Object.values(buttons).forEach(btn => {
+                if (btn) {
+                    btn.classList.remove('active');
+                    btn.style.borderColor = 'var(--border-color)';
+                }
+            });
+            
+            // Add active class to selected
+            if (buttons[theme]) {
+                buttons[theme].classList.add('active');
+                buttons[theme].style.borderColor = 'var(--accent-color)';
+            }
+        }
+        
+        function loadTheme() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            setTheme(theme);
+        }
+        
+        // Legacy function for compatibility
+        function toggleTheme() {
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            const nextTheme = currentTheme === 'dark' ? 'light' : currentTheme === 'light' ? 'oled' : 'dark';
+            setTheme(nextTheme);
+        }
+        
+        // Auto-login if already authenticated
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                
+                // Poll for initApp
+                const waitInit = setInterval(() => {
+                    if (typeof initApp === 'function') {
+                        clearInterval(waitInit);
+                        initApp();
+                    }
+                }, 50);
+            }
+        });
+        
+        // ============= DATA STRUCTURE =============
+        let appData = {
+            rooms: [],
+            distributorTypes: [], // Új: elosztó típusok (pl. "Egyes Kazánelosztó")
+            distributors: [],
+            branches: [],
+            equipment: []
+        };
+        
+        let contextMenuTarget = null;
+        let longPressTimer = null;
+        let currentModalType = null;
+        let editingItemId = null;
+        
+        // ============= INITIALIZATION =============
+        function initApp() {
+            loadFromLocalStorage();
+            loadTheme();
+            updateTime();
+            setInterval(updateTime, 60000);
+            renderAll();
+            
+            // Prevent viewport resize on keyboard open
+            const viewportHeight = window.innerHeight;
+            document.documentElement.style.setProperty('--viewport-height', `${viewportHeight}px`);
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.height = '100%';
+            
+            // Close context menu on click outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.context-menu')) {
+                    closeContextMenu();
+                }
+            });
+        }
+        
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = 
+                now.getHours().toString().padStart(2, '0') + ':' + 
+                now.getMinutes().toString().padStart(2, '0');
+        }
+        
+        // ============= LOCAL STORAGE =============
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('equipmentAppData');
+            if (saved) {
+                console.log('📂 Loading data from localStorage...');
+                appData = JSON.parse(saved);
+                console.log('✅ Data loaded:', {
+                    rooms: appData.rooms?.length || 0,
+                    distributorTypes: appData.distributorTypes?.length || 0,
+                    distributors: appData.distributors?.length || 0,
+                    branches: appData.branches?.length || 0,
+                    equipment: appData.equipment?.length || 0
+                });
+                
+                // Backward compatibility: ha nincs distributorTypes, hozzáadjuk
+                if (!appData.distributorTypes) {
+                    console.warn('⚠️ distributorTypes hiányzik, üres tömböt hozunk létre');
+                    appData.distributorTypes = [];
+                }
+                
+                // Backward compatibility: ha a distributorokban nincs typeId, null-ra állítjuk
+                if (appData.distributors && Array.isArray(appData.distributors)) {
+                    appData.distributors.forEach(dist => {
+                        if (dist.typeId === undefined) {
+                            dist.typeId = null;
+                        }
+                    });
+                }
+                
+                saveToLocalStorage();
+            } else {
+                console.log('ℹ️ No saved data found, creating empty structure');
+                // Üres kezdő adatok
+                appData = {
+                    rooms: [],
+                    distributorTypes: [],
+                    distributors: [],
+                    branches: [],
+                    equipment: []
+                };
+                saveToLocalStorage();
+            }
+        }
+        
+        function saveToLocalStorage() {
+            try {
+                const dataStr = JSON.stringify(appData);
+                localStorage.setItem('equipmentAppData', dataStr);
+                console.log('💾 Saved to localStorage:', {
+                    size: (dataStr.length / 1024).toFixed(2) + ' KB',
+                    rooms: appData.rooms?.length || 0,
+                    distributorTypes: appData.distributorTypes?.length || 0,
+                    distributors: appData.distributors?.length || 0,
+                    branches: appData.branches?.length || 0,
+                    equipment: appData.equipment?.length || 0
+                });
+            } catch (err) {
+                console.error('❌ localStorage save failed:', err);
+                alert('Hiba történt az adatok mentésekor! ❌\n\n' + err.message);
+            }
+        }
+        
+        // ============= RENDER FUNCTIONS =============
+        // ============= NATURAL SORT =============
+        function naturalSort(a, b) {
+            // Természetes rendezés - számokat számként kezeli
+            const ax = [];
+            const bx = [];
+            
+            a.replace(/(\d+)|(\D+)/g, (_, $1, $2) => { ax.push([$1 || Infinity, $2 || ""]) });
+            b.replace(/(\d+)|(\D+)/g, (_, $1, $2) => { bx.push([$1 || Infinity, $2 || ""]) });
+            
+            while(ax.length && bx.length) {
+                const an = ax.shift();
+                const bn = bx.shift();
+                const nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+                if(nn) return nn;
+            }
+            
+            return ax.length - bx.length;
+        }
+        
+        function sortDistributorsByCode(distributors) {
+            return distributors.sort((a, b) => naturalSort(a.code, b.code));
+        }
+        
+        // ============= RENDER FUNCTIONS =============
+        function renderAll() {
+            renderSearchResults();
+            renderHierarchy();
+            renderEditScreen();
+        }
+        
+        function renderSearchResults() {
+            // Empty by default, will be filled by search
+        }
+        
+        function renderHierarchy() {
+            const container = document.getElementById('hierarchyContent');
+            container.innerHTML = '<div class="hierarchy-section">';
+            
+            // Védelem: ha nincs rooms tömb, üres tömböt használunk
+            const rooms = appData.rooms || [];
+            const distributors = appData.distributors || [];
+            
+            rooms.forEach(room => {
+                const dists = distributors.filter(d => d.roomId === room.id);
+                container.innerHTML += `
+                    <div class="hierarchy-item">
+                        <button class="hierarchy-header" onclick="showRoomDetails('${room.id}')" data-type="room" data-id="${room.id}">
+                            <div>
+                                <div class="hierarchy-title">${room.name}</div>
+                                <div class="hierarchy-subtitle">${dists.length} elosztó</div>
+                            </div>
+                            <span class="chevron">›</span>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML += '</div>';
+            setupLongPress();
+        }
+        
+        function toggleDistributor(button) {
+            const branches = button.parentElement.nextElementSibling;
+            if (!branches) return;
+            
+            const chevron = button.querySelector('.chevron');
+            if (!chevron) return;
+            
+            if (branches.classList.contains('expanded')) {
+                branches.classList.remove('expanded');
+                branches.style.maxHeight = '0';
+                chevron.classList.remove('expanded');
+            } else {
+                branches.classList.add('expanded');
+                branches.style.maxHeight = branches.scrollHeight + 'px';
+                chevron.classList.add('expanded');
+            }
+        }
+        
+        function showRoomDetails(roomId) {
+            const room = appData.rooms.find(r => r.id === roomId);
+            if (!room) return;
+            
+            // Védelem: ha nincs tömb, üres tömböt használunk
+            const distributorTypes = appData.distributorTypes || [];
+            const distributors = appData.distributors || [];
+            const branches = appData.branches || [];
+            
+            const types = distributorTypes.filter(t => t.roomId === roomId);
+            const unassignedDists = sortDistributorsByCode(distributors.filter(d => d.roomId === roomId && !d.typeId));
+            
+            // Create a new screen for room details
+            const screenDiv = document.createElement('div');
+            screenDiv.className = 'screen active';
+            screenDiv.id = `roomDetail_${roomId}`;
+            
+            screenDiv.innerHTML = `
+                <div class="back-button" onclick="goBackToHierarchy()">
+                    ← Vissza
+                </div>
+                <div class="hierarchy-section" style="padding: 16px;">
+                    <div class="breadcrumb" style="padding: 12px; background: var(--bg-tertiary); border-radius: 8px; margin-bottom: 16px; font-size: 13px; color: var(--text-secondary);">
+                        ${room.name}
+                    </div>
+                    
+                    ${types.map(type => {
+                        const typeDists = sortDistributorsByCode(distributors.filter(d => d.typeId === type.id));
+                        return `
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-weight: 600; font-size: 15px; padding: 8px 0; color: var(--text-primary);">📦 ${type.name}</div>
+                                ${typeDists.map(dist => {
+                                    const distBranches = branches.filter(b => b.distId === dist.id);
+                                    return `
+                                        <div class="hierarchy-item" style="margin-bottom: 8px;">
+                                            <button class="hierarchy-header" onclick="showDistributorDetails('${dist.id}')" data-type="distributor" data-id="${dist.id}">
+                                                <div>
+                                                    <div class="hierarchy-title">${dist.code}</div>
+                                                    <div class="hierarchy-subtitle">${dist.name} - ${distBranches.length} leágazás</div>
+                                                </div>
+                                                <span class="chevron">›</span>
+                                            </button>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        `;
+                    }).join('')}
+                    
+                    ${unassignedDists.length > 0 ? `
+                        <div style="margin-bottom: 20px;">
+                            <div style="font-weight: 600; font-size: 15px; padding: 8px 0; color: var(--text-primary);">Típus nélküli elosztók</div>
+                            ${unassignedDists.map(dist => {
+                                const distBranches = branches.filter(b => b.distId === dist.id);
+                                return `
+                                    <div class="hierarchy-item" style="margin-bottom: 8px;">
+                                        <button class="hierarchy-header" onclick="showDistributorDetails('${dist.id}')" data-type="distributor" data-id="${dist.id}">
+                                            <div>
+                                                <div class="hierarchy-title">${dist.code}</div>
+                                                <div class="hierarchy-subtitle">${dist.name} - ${distBranches.length} leágazás</div>
+                                            </div>
+                                            <span class="chevron">›</span>
+                                        </button>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    ${types.length === 0 && unassignedDists.length === 0 ? '<div class="empty-placeholder">Nincs elosztó ebben a kapcsolótérben</div>' : ''}
+                </div>
+            `;
+            
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            
+            // Add new screen before bottom nav
+            const bottomNav = document.querySelector('.bottom-nav');
+            bottomNav.parentNode.insertBefore(screenDiv, bottomNav);
+            
+            setupLongPress();
+        }
+        
+        function renderEditScreen() {
+            // Védelem: ha nincs tömbök, üres tömböt használunk
+            const rooms = appData.rooms || [];
+            const distributorTypes = appData.distributorTypes || [];
+            const distributors = appData.distributors || [];
+            
+            // Render rooms list with navigation
+            const roomsList = document.getElementById('editRoomsList');
+            roomsList.innerHTML = rooms.length > 0 
+                ? rooms.map(room => {
+                    const types = distributorTypes.filter(t => t.roomId === room.id);
+                    const dists = distributors.filter(d => d.roomId === room.id);
+                    return `
+                        <div class="edit-list-item" onclick="showEditRoomTypes('${room.id}')">
+                            <div>
+                                <div style="font-weight: 500;">${room.name}</div>
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">${types.length} típus, ${dists.length} elosztó</div>
+                            </div>
+                            <div class="edit-actions" onclick="event.stopPropagation()">
+                                <button class="edit-btn edit" onclick="editItem('room', '${room.id}')">✏️</button>
+                                <button class="edit-btn delete" onclick="deleteItem('room', '${room.id}')">🗑️</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('')
+                : '<div class="empty-placeholder">Még nincs kapcsolótér. Kattints a + gombra az első hozzáadásához!</div>';
+        }
+        
+        // ============= CONTEXTUAL EDIT NAVIGATION =============
+        function showEditRoomTypes(roomId) {
+            const room = appData.rooms.find(r => r.id === roomId);
+            if (!room) return;
+            
+            // Védelem: ha nincs tömbök, üres tömböt használunk
+            const distributorTypes = appData.distributorTypes || [];
+            const distributors = appData.distributors || [];
+            
+            const types = distributorTypes.filter(t => t.roomId === roomId);
+            const unassignedDists = sortDistributorsByCode(distributors.filter(d => d.roomId === roomId && !d.typeId));
+            
+            // Create screen if it doesn't exist
+            let screen = document.getElementById('editNavTypes_' + roomId);
+            if (screen) {
+                screen.remove();
+            }
+            
+            const editScreen = document.getElementById('editScreen');
+            const newScreen = document.createElement('div');
+            newScreen.className = 'edit-nav-screen active';
+            newScreen.id = 'editNavTypes_' + roomId;
+            newScreen.innerHTML = `
+                <div class="back-button" onclick="goBackToEditRooms()">← Vissza</div>
+                <div class="edit-section">
+                    <div class="breadcrumb" style="padding: 12px; background: var(--bg-tertiary); border-radius: 8px; margin: 16px; font-size: 13px; color: var(--text-secondary);">
+                        ${room.name}
+                    </div>
+                    <button class="add-button-large" onclick="openAddDistributorTypeModal('${roomId}')">+ Új Elosztó Típus</button>
+                    <button class="add-button-large" onclick="openAddDistributorModal('${roomId}', null)" style="margin-top: 8px;">+ Új Elosztó</button>
+                    
+                    ${types.length > 0 ? `
+                    <div style="margin-top: 20px;">
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); padding: 0 16px 8px 16px;">Elosztó Típusok</div>
+                        <div class="edit-list">
+                            ${types.map(type => {
+                                const typeDists = appData.distributors.filter(d => d.typeId === type.id);
+                                return `
+                                    <div class="edit-list-item" onclick="showEditTypeDistributors('${type.id}')">
+                                        <div>
+                                            <div style="font-weight: 500;">📦 ${type.name}</div>
+                                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">${typeDists.length} elosztó</div>
+                                        </div>
+                                        <div class="edit-actions" onclick="event.stopPropagation()">
+                                            <button class="edit-btn edit" onclick="editItem('distributorType', '${type.id}')">✏️</button>
+                                            <button class="edit-btn delete" onclick="deleteItem('distributorType', '${type.id}')">🗑️</button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    ${unassignedDists.length > 0 ? `
+                    <div style="margin-top: 20px;">
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); padding: 0 16px 8px 16px;">Típus nélküli elosztók</div>
+                        <div class="edit-list">
+                            ${unassignedDists.map(dist => {
+                                const branches = appData.branches.filter(b => b.distId === dist.id);
+                                return `
+                                    <div class="edit-list-item" onclick="showEditDistBranches('${dist.id}')">
+                                        <div>
+                                            <div style="font-weight: 500;">${dist.code} - ${dist.name}</div>
+                                            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">${branches.length} leágazás</div>
+                                        </div>
+                                        <div class="edit-actions" onclick="event.stopPropagation()">
+                                            <button class="edit-btn edit" onclick="editItem('distributor', '${dist.id}')">✏️</button>
+                                            <button class="edit-btn delete" onclick="deleteItem('distributor', '${dist.id}')">🗑️</button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    ${types.length === 0 && unassignedDists.length === 0 ? '<div class="empty-placeholder">Még nincs elosztó típus vagy elosztó</div>' : ''}
+                </div>
+            `;
+            
+            // Hide current screen
+            document.querySelectorAll('.edit-nav-screen').forEach(s => s.classList.remove('active'));
+            editScreen.appendChild(newScreen);
+        }
+        
+        function showEditTypeDistributors(typeId) {
+            const type = appData.distributorTypes.find(t => t.id === typeId);
+            if (!type) return;
+            
+            const room = appData.rooms.find(r => r.id === type.roomId);
+            const dists = sortDistributorsByCode(appData.distributors.filter(d => d.typeId === typeId));
+            
+            let screen = document.getElementById('editNavTypeDist_' + typeId);
+            if (screen) {
+                screen.remove();
+            }
+            
+            const editScreen = document.getElementById('editScreen');
+            const newScreen = document.createElement('div');
+            newScreen.className = 'edit-nav-screen active';
+            newScreen.id = 'editNavTypeDist_' + typeId;
+            newScreen.innerHTML = `
+                <div class="back-button" onclick="goBackToEditTypes('${type.roomId}')">← Vissza</div>
+                <div class="edit-section">
+                    <div class="breadcrumb" style="padding: 12px; background: var(--bg-tertiary); border-radius: 8px; margin: 16px; font-size: 13px; color: var(--text-secondary);">
+                        ${room ? room.name + ' › ' : ''}${type.name}
+                    </div>
+                    <button class="add-button-large" onclick="openAddDistributorModal('${type.roomId}', '${typeId}')">+ Új Elosztó</button>
+                    <div class="edit-list">
+                        ${dists.map(dist => {
+                            const branches = appData.branches.filter(b => b.distId === dist.id);
+                            return `
+                                <div class="edit-list-item" onclick="showEditDistBranches('${dist.id}')">
+                                    <div>
+                                        <div style="font-weight: 500;">${dist.code} - ${dist.name}</div>
+                                        <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">${branches.length} leágazás</div>
+                                    </div>
+                                    <div class="edit-actions" onclick="event.stopPropagation()">
+                                        <button class="edit-btn edit" onclick="editItem('distributor', '${dist.id}')">✏️</button>
+                                        <button class="edit-btn delete" onclick="deleteItem('distributor', '${dist.id}')">🗑️</button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('') || '<div class="empty-placeholder">Még nincs elosztó ebben a típusban</div>'}
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('.edit-nav-screen').forEach(s => s.classList.remove('active'));
+            editScreen.appendChild(newScreen);
+        }
+        
+        function showEditDistBranches(distId) {
+            const dist = appData.distributors.find(d => d.id === distId);
+            if (!dist) return;
+            
+            const room = appData.rooms.find(r => r.id === dist.roomId);
+            const type = dist.typeId ? appData.distributorTypes.find(t => t.id === dist.typeId) : null;
+            const branches = appData.branches.filter(b => b.distId === distId);
+            
+            const editScreen = document.getElementById('editScreen');
+            const newScreen = document.createElement('div');
+            newScreen.className = 'edit-nav-screen active';
+            newScreen.id = 'editNavBranch_' + distId;
+            
+            // Determine back button based on whether distributor has a type
+            const backButton = type 
+                ? `<div class="back-button" onclick="goBackToEditTypes('${dist.roomId}'); showEditTypeDistributors('${dist.typeId}')">← Vissza</div>`
+                : `<div class="back-button" onclick="goBackToEditTypes('${dist.roomId}')">← Vissza</div>`;
+            
+            newScreen.innerHTML = `
+                ${backButton}
+                <div class="edit-section">
+                    <div class="breadcrumb" style="padding: 12px; background: var(--bg-tertiary); border-radius: 8px; margin: 16px; font-size: 13px; color: var(--text-secondary);">
+                        ${room ? room.name + ' › ' : ''}${type ? type.name + ' › ' : ''}${dist.code}
+                    </div>
+                    <button class="add-button-large" onclick="openAddBranchModal('${distId}')">+ Új Leágazás</button>
+                    <div class="edit-list">
+                        ${branches.map(branch => {
+                            const equipment = appData.equipment.filter(e => e.branchId === branch.id);
+                            return `
+                                <div class="edit-list-item" onclick="showEditBranchEquipment('${branch.id}')">
+                                    <div>
+                                        <div style="font-weight: 500;">${branch.name}</div>
+                                        <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">${equipment.length} berendezés</div>
+                                    </div>
+                                    <div class="edit-actions" onclick="event.stopPropagation()">
+                                        <button class="edit-btn edit" onclick="editItem('branch', '${branch.id}')">✏️</button>
+                                        <button class="edit-btn delete" onclick="deleteItem('branch', '${branch.id}')">🗑️</button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('') || '<div class="empty-placeholder">Még nincs leágazás</div>'}
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('.edit-nav-screen').forEach(s => s.classList.remove('active'));
+            editScreen.appendChild(newScreen);
+        }
+        
+        function showEditBranchEquipment(branchId) {
+            const branch = appData.branches.find(b => b.id === branchId);
+            if (!branch) return;
+            
+            const dist = appData.distributors.find(d => d.id === branch.distId);
+            const room = dist ? appData.rooms.find(r => r.id === dist.roomId) : null;
+            const equipment = appData.equipment.filter(e => e.branchId === branchId);
+            
+            const editScreen = document.getElementById('editScreen');
+            const newScreen = document.createElement('div');
+            newScreen.className = 'edit-nav-screen active';
+            newScreen.id = 'editNavEquip_' + branchId;
+            newScreen.innerHTML = `
+                <div class="back-button" onclick="goBackToEditBranches('${branch.distId}')">← Vissza</div>
+                <div class="edit-section">
+                    <div class="breadcrumb" style="padding: 12px; background: var(--bg-tertiary); border-radius: 8px; margin: 16px; font-size: 13px; color: var(--text-secondary);">
+                        ${room ? room.name + ' › ' : ''}${dist ? dist.code + ' › ' : ''}${branch.name}
+                    </div>
+                    <button class="add-button-large" onclick="openAddEquipmentModal('${branchId}')">+ Új Berendezés</button>
+                    <div class="edit-list">
+                        ${equipment.map(eq => `
+                            <div class="edit-list-item">
+                                <div>
+                                    <div style="color: var(--accent-color); font-weight: 600;">${eq.kks || '(KKS nélkül)'}</div>
+                                    <div style="margin-top: 2px;">${eq.name}</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Mező ${eq.field}</div>
+                                </div>
+                                <div class="edit-actions">
+                                    <button class="edit-btn edit" onclick="editItem('equipment', '${eq.id}')">✏️</button>
+                                    <button class="edit-btn delete" onclick="deleteItem('equipment', '${eq.id}')">🗑️</button>
+                                </div>
+                            </div>
+                        `).join('') || '<div class="empty-placeholder">Még nincs berendezés</div>'}
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('.edit-nav-screen').forEach(s => s.classList.remove('active'));
+            editScreen.appendChild(newScreen);
+        }
+        
+        function goBackToEditRooms() {
+            document.querySelectorAll('[id^="editNavTypes_"], [id^="editNavTypeDist_"]').forEach(s => s.remove());
+            // Refresh the rooms list to show updated type/distributor counts
+            renderEditScreen();
+            document.getElementById('editNavRooms').classList.add('active');
+        }
+        
+        function goBackToEditTypes(roomId) {
+            document.querySelectorAll('[id^="editNavTypeDist_"], [id^="editNavBranch_"]').forEach(s => s.remove());
+            // Always regenerate the types screen to show updated data
+            showEditRoomTypes(roomId);
+        }
+        
+        function goBackToEditBranches(distId) {
+            document.querySelectorAll('[id^="editNavEquip_"]').forEach(s => s.remove());
+            // Always regenerate the branch screen to show updated data
+            showEditDistBranches(distId);
+        }
+        
+        function getEquipmentPath(eq) {
+            const branch = appData.branches.find(b => b.id === eq.branchId);
+            if (!branch) return 'N/A';
+            
+            const dist = appData.distributors.find(d => d.id === branch.distId);
+            if (!dist) return 'N/A';
+            
+            const room = appData.rooms.find(r => r.id === dist.roomId);
+            if (!room) return 'N/A';
+            
+            return `${room.name} › ${dist.code} › ${branch.name} › Mező ${eq.field}`;
+        }
+        
+        // ============= SEARCH FUNCTIONALITY =============
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const emptyState = document.getElementById('emptyState');
+        const searchBackButton = document.getElementById('searchBackButton');
+        
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query.length === 0) {
+                searchResults.classList.remove('active');
+                searchResults.innerHTML = '';
+                emptyState.style.display = 'block';
+                searchBackButton.style.display = 'none';
+                return;
+            }
+            
+            // Védelem: ha nincs equipment tömb, üres tömböt használunk
+            const equipment = appData.equipment || [];
+            
+            const filtered = equipment.filter(eq => 
+                eq.kks.toLowerCase().includes(query) || 
+                eq.name.toLowerCase().includes(query)
+            );
+            
+            if (filtered.length > 0) {
+                emptyState.style.display = 'none';
+                searchResults.classList.add('active');
+                searchBackButton.style.display = 'block';
+                
+                searchResults.innerHTML = filtered.map(eq => {
+                    const path = getEquipmentPath(eq);
+                    return `
+                        <div class="result-item" onclick="showEquipmentDetail('${eq.id}')" data-type="equipment" data-id="${eq.id}">
+                            <div class="result-kks">${eq.kks || '(KKS nélkül)'}</div>
+                            <div class="result-name">${eq.name}</div>
+                            <div class="result-path">${path}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                setupLongPress();
+            } else {
+                searchResults.innerHTML = '<div style="padding: 40px 20px; text-align: center; color: #666;">Nincs találat</div>';
+                searchResults.classList.add('active');
+                emptyState.style.display = 'none';
+                searchBackButton.style.display = 'block';
+            }
+        });
+        
+        // ============= NAVIGATION =============
+        function toggleHierarchy(button) {
+            // Find the parent hierarchy-item div
+            const hierarchyItem = button.closest('.hierarchy-item');
+            if (!hierarchyItem) return;
+            
+            // Find the children div within this hierarchy-item
+            const children = hierarchyItem.querySelector('.hierarchy-children');
+            if (!children) return;
+            
+            const chevron = button.querySelector('.chevron');
+            if (!chevron) return;
+            
+            children.classList.toggle('expanded');
+            chevron.classList.toggle('expanded');
+        }
+        
+        function switchTab(index, button) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            button.classList.add('active');
+            
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            const screens = ['searchScreen', 'hierarchyScreen', 'editScreen', 'settingsScreen'];
+            document.getElementById(screens[index]).classList.add('active');
+            
+            // Reset edit navigation to rooms when switching to edit tab
+            if (index === 2) {
+                document.querySelectorAll('[id^="editNavDist_"], [id^="editNavBranch_"], [id^="editNavEquip_"]').forEach(s => s.remove());
+                document.querySelectorAll('.edit-nav-screen').forEach(s => s.classList.remove('active'));
+                document.getElementById('editNavRooms').classList.add('active');
+            }
+            
+            // Update statistics when opening settings
+            if (index === 3) {
+                updateStatistics();
+            }
+        }
+        
+        function updateStatistics() {
+            // Védelem: ha nincs tömb, 0-t jelenítünk meg
+            document.getElementById('statRooms').textContent = (appData.rooms || []).length;
+            document.getElementById('statDistributors').textContent = (appData.distributors || []).length;
+            document.getElementById('statBranches').textContent = (appData.branches || []).length;
+            document.getElementById('statEquipment').textContent = (appData.equipment || []).length;
+            
+            // Update theme button
+            const themeBtn = document.getElementById('themeToggleBtn');
+            if (themeBtn) {
+                const currentTheme = localStorage.getItem('theme') || 'dark';
+                themeBtn.textContent = currentTheme === 'light' ? '☀️' : '🌙';
+            }
+        }
+        
+        function showDistributorDetails(distId) {
+            const dist = appData.distributors.find(d => d.id === distId);
+            if (!dist) return;
+            
+            const room = appData.rooms.find(r => r.id === dist.roomId);
+            const branches = appData.branches.filter(b => b.distId === distId);
+            
+            // Create a new screen dynamically
+            const existingScreen = document.getElementById('distDetail_' + distId);
+            if (existingScreen) {
+                existingScreen.remove();
+            }
+            
+            const screenDiv = document.createElement('div');
+            screenDiv.className = 'screen active';
+            screenDiv.id = 'distDetail_' + distId;
+            screenDiv.innerHTML = `
+                <button class="back-button" onclick="goBackToRoom('${dist.roomId}')">
+                    ← Vissza
+                </button>
+                <div class="breadcrumb" style="padding: 12px; background: var(--bg-tertiary); border-radius: 8px; margin: 16px; font-size: 13px; color: var(--text-secondary);">
+                    ${room.name} › ${dist.code}
+                </div>
+                <div class="hierarchy-section">
+                    ${branches.map(branch => {
+                        const equipment = appData.equipment.filter(e => e.branchId === branch.id);
+                        return `
+                            <div class="hierarchy-item">
+                                <div class="hierarchy-add-bar">
+                                    <div class="hierarchy-add-text">${branch.name}</div>
+                                </div>
+                                <div class="hierarchy-children expanded" style="max-height: none;">
+                                    ${equipment.map(eq => `
+                                        <div class="child-item equipment-detail-item" onclick="showEquipmentDetail('${eq.id}')" data-type="equipment" data-id="${eq.id}">
+                                            <div class="equipment-kks-code">${eq.kks || '(KKS nélkül)'}</div>
+                                            <div class="equipment-name-text">${eq.name}</div>
+                                        </div>
+                                    `).join('') || '<div class="empty-placeholder empty-equipment">Nincs berendezés</div>'}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            
+            // Add new screen before bottom nav
+            const bottomNav = document.querySelector('.bottom-nav');
+            bottomNav.parentNode.insertBefore(screenDiv, bottomNav);
+            
+            setupLongPress();
+        }
+        
+        function toggleBranchInDetail(button) {
+            const hierarchyItem = button.closest('.hierarchy-item');
+            if (!hierarchyItem) return;
+            
+            const children = hierarchyItem.querySelector('.hierarchy-children');
+            if (!children) return;
+            
+            const chevron = button.querySelector('.chevron');
+            if (!chevron) return;
+            
+            children.classList.toggle('expanded');
+            chevron.classList.toggle('expanded');
+        }
+        
+        function goBackToHierarchy() {
+            // Remove all dynamic detail screens
+            document.querySelectorAll('[id^="distDetail_"], [id^="branchDetail_"], [id^="roomDetail_"]').forEach(s => s.remove());
+            
+            // Show hierarchy screen
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById('hierarchyScreen').classList.add('active');
+        }
+        
+        function goBackToRoom(roomId) {
+            // Remove distributor detail screens
+            document.querySelectorAll('[id^="distDetail_"]').forEach(s => s.remove());
+            
+            // Check if room detail screen exists
+            const roomDetailScreen = document.getElementById('roomDetail_' + roomId);
+            if (roomDetailScreen) {
+                // Show existing room detail screen
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+                roomDetailScreen.classList.add('active');
+            } else {
+                // Create new room detail screen
+                showRoomDetails(roomId);
+            }
+        }
+        
+        // ============= LONG PRESS CONTEXT MENU =============
+        // Long press functionality has been disabled
+        function setupLongPress() {
+            // Disabled
+        }
+        
+        function handleLongPressStart(e) {
+            // Disabled
+        }
+        
+        function handleLongPressEnd(e) {
+            // Disabled
+        }
+        
+        function showContextMenu(e) {
+            // Disabled
+        }
+        
+        function closeContextMenu() {
+            document.getElementById('contextMenu').classList.remove('active');
+        }
+        
+        function editFromContext() {
+            if (contextMenuTarget) {
+                const type = contextMenuTarget.dataset.type;
+                const id = contextMenuTarget.dataset.id;
+                editItem(type, id);
+            }
+            closeContextMenu();
+        }
+        
+        function deleteFromContext() {
+            if (contextMenuTarget) {
+                const type = contextMenuTarget.dataset.type;
+                const id = contextMenuTarget.dataset.id;
+                deleteItem(type, id);
+            }
+            closeContextMenu();
+        }
+        
+        // ============= MODAL FUNCTIONS =============
+        function updateDistributorTypeOptions(roomId, selectedTypeId) {
+            const typeSelect = document.getElementById('distType');
+            if (!typeSelect) return;
+            
+            const types = appData.distributorTypes.filter(t => t.roomId === roomId);
+            typeSelect.innerHTML = `
+                <option value="">-- Típus nélkül --</option>
+                ${types.map(t => `<option value="${t.id}" ${t.id === selectedTypeId ? 'selected' : ''}>${t.name}</option>`).join('')}
+            `;
+        }
+        
+        function openAddDistributorTypeModal(roomId) {
+            currentModalType = 'distributorType-quick';
+            editingItemId = null;
+            window.currentRoomId = roomId;
+            
+            const modal = document.getElementById('addEditModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('modalForm');
+            
+            title.textContent = 'Új Elosztó Típus';
+            form.innerHTML = `
+                <div class="form-group">
+                    <label class="form-label">Elosztó Típus Neve</label>
+                    <input type="text" class="form-input" id="typeName" placeholder="pl. Egyes Kazánelosztó">
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+        
+        function openAddDistributorModal(roomId, typeId = null) {
+            currentModalType = 'distributor-quick';
+            editingItemId = null;
+            window.currentRoomId = roomId;
+            window.currentTypeId = typeId; // Store for later use
+            
+            const modal = document.getElementById('addEditModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('modalForm');
+            
+            const types = appData.distributorTypes.filter(t => t.roomId === roomId);
+            
+            title.textContent = 'Új Elosztó';
+            form.innerHTML = `
+                ${types.length > 0 ? `
+                <div class="form-group">
+                    <label class="form-label">Elosztó Típus (opcionális)</label>
+                    <select class="form-select" id="distType">
+                        <option value="">-- Típus nélkül --</option>
+                        ${types.map(t => `<option value="${t.id}" ${t.id === typeId ? 'selected' : ''}>${t.name}</option>`).join('')}
+                    </select>
+                </div>
+                ` : ''}
+                <div class="form-group">
+                    <label class="form-label">Elosztó Kód</label>
+                    <input type="text" class="form-input" id="distCode" placeholder="pl. K3-03BJC05">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Név</label>
+                    <input type="text" class="form-input" id="distName" placeholder="pl. Hármas Kazánelosztó">
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+        
+        function openAddBranchModal(distId) {
+            currentModalType = 'branch';
+            editingItemId = null;
+            window.currentDistId = distId; // Store for later use
+            
+            const modal = document.getElementById('addEditModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('modalForm');
+            
+            title.textContent = 'Új Leágazás';
+            form.innerHTML = `
+                <div class="form-group">
+                    <label class="form-label">Leágazás Neve</label>
+                    <input type="text" class="form-input" id="branchName" placeholder="pl. H leágazás">
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+        
+        function openAddEquipmentModal(branchId) {
+            currentModalType = 'equipment-quick';
+            editingItemId = null;
+            window.currentBranchId = branchId; // Store for later use
+            
+            const modal = document.getElementById('addEditModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('modalForm');
+            
+            title.textContent = 'Új Berendezés';
+            form.innerHTML = `
+                <div class="form-group">
+                    <label class="form-label">Mező</label>
+                    <input type="text" class="form-input" id="eqField" placeholder="pl. 1">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">KKS Kód</label>
+                    <input type="text" class="form-input" id="eqKks" placeholder="pl. 13ETG10AF105">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Berendezés Név</label>
+                    <input type="text" class="form-input" id="eqName" placeholder="pl. Kazánhamu kihordó csiga M023">
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+        
+        function openAddModal(type) {
+            currentModalType = type;
+            editingItemId = null;
+            
+            const modal = document.getElementById('addEditModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('modalForm');
+            
+            if (type === 'room') {
+                title.textContent = 'Új Kapcsoló Tér';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Név</label>
+                        <input type="text" class="form-input" id="roomName" placeholder="pl. LV3 Kapcsolótér">
+                    </div>
+                `;
+            } else if (type === 'distributorType') {
+                title.textContent = 'Új Elosztó Típus';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Kapcsoló Tér</label>
+                        <select class="form-select" id="typeRoom">
+                            ${appData.rooms.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Elosztó Típus Neve</label>
+                        <input type="text" class="form-input" id="typeName" placeholder="pl. Egyes Kazánelosztó">
+                    </div>
+                `;
+            } else if (type === 'distributor') {
+                title.textContent = 'Új Elosztó';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Kapcsoló Tér</label>
+                        <select class="form-select" id="distRoom">
+                            ${appData.rooms.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Elosztó Kód</label>
+                        <input type="text" class="form-input" id="distCode" placeholder="pl. K3-03BJC05">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Név</label>
+                        <input type="text" class="form-input" id="distName" placeholder="pl. Hármas Kazánelosztó">
+                    </div>
+                `;
+            } else if (type === 'branch') {
+                title.textContent = 'Új Leágazás';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Elosztó</label>
+                        <select class="form-select" id="branchDist">
+                            ${appData.distributors.map(d => {
+                                const room = appData.rooms.find(r => r.id === d.roomId);
+                                return `<option value="${d.id}">${room ? room.name + ' › ' : ''}${d.code}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Név</label>
+                        <input type="text" class="form-input" id="branchName" placeholder="pl. A leágazás">
+                    </div>
+                `;
+            } else if (type === 'equipment') {
+                // Get all branches with their full path
+                const branchOptions = [];
+                appData.rooms.forEach(room => {
+                    appData.distributors.filter(d => d.roomId === room.id).forEach(dist => {
+                        appData.branches.filter(b => b.distId === dist.id).forEach(branch => {
+                            branchOptions.push({
+                                id: branch.id,
+                                label: `${room.name} › ${dist.code} › ${branch.name}`
+                            });
+                        });
+                    });
+                });
+                
+                title.textContent = 'Új Berendezés';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Leágazás</label>
+                        <select class="form-select" id="eqBranch">
+                            ${branchOptions.map(b => `<option value="${b.id}">${b.label}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mező</label>
+                        <input type="text" class="form-input" id="eqField" placeholder="pl. 1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">KKS Kód</label>
+                        <input type="text" class="form-input" id="eqKks" placeholder="pl. 13ETG10AF105">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Berendezés Név</label>
+                        <input type="text" class="form-input" id="eqName" placeholder="pl. Kazánhamu kihordó csiga M023">
+                    </div>
+                `;
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function editItem(type, id) {
+            currentModalType = type;
+            editingItemId = id;
+            
+            const modal = document.getElementById('addEditModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('modalForm');
+            
+            if (type === 'room') {
+                const item = appData.rooms.find(r => r.id === id);
+                title.textContent = 'Kapcsoló Tér Szerkesztése';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Név</label>
+                        <input type="text" class="form-input" id="roomName" value="${item.name}">
+                    </div>
+                `;
+            } else if (type === 'distributorType') {
+                const item = appData.distributorTypes.find(t => t.id === id);
+                title.textContent = 'Elosztó Típus Szerkesztése';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Kapcsoló Tér</label>
+                        <select class="form-select" id="typeRoom">
+                            ${appData.rooms.map(r => `<option value="${r.id}" ${r.id === item.roomId ? 'selected' : ''}>${r.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Elosztó Típus Neve</label>
+                        <input type="text" class="form-input" id="typeName" value="${item.name}">
+                    </div>
+                `;
+            } else if (type === 'distributor') {
+                const item = appData.distributors.find(d => d.id === id);
+                const types = appData.distributorTypes.filter(t => t.roomId === item.roomId);
+                title.textContent = 'Elosztó Szerkesztése';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Kapcsoló Tér</label>
+                        <select class="form-select" id="distRoom" onchange="updateDistributorTypeOptions(this.value, '${item.typeId || ''}')">
+                            ${appData.rooms.map(r => `<option value="${r.id}" ${r.id === item.roomId ? 'selected' : ''}>${r.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Elosztó Típus (opcionális)</label>
+                        <select class="form-select" id="distType">
+                            <option value="">-- Típus nélkül --</option>
+                            ${types.map(t => `<option value="${t.id}" ${t.id === item.typeId ? 'selected' : ''}>${t.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Elosztó Kód</label>
+                        <input type="text" class="form-input" id="distCode" value="${item.code}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Név</label>
+                        <input type="text" class="form-input" id="distName" value="${item.name}">
+                    </div>
+                `;
+            } else if (type === 'branch') {
+                const item = appData.branches.find(b => b.id === id);
+                title.textContent = 'Leágazás Szerkesztése';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Elosztó</label>
+                        <select class="form-select" id="branchDist">
+                            ${appData.distributors.map(d => {
+                                const room = appData.rooms.find(r => r.id === d.roomId);
+                                return `<option value="${d.id}" ${d.id === item.distId ? 'selected' : ''}>${room ? room.name + ' › ' : ''}${d.code}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Név</label>
+                        <input type="text" class="form-input" id="branchName" value="${item.name}">
+                    </div>
+                `;
+            } else if (type === 'equipment') {
+                const item = appData.equipment.find(e => e.id === id);
+                const branchOptions = [];
+                appData.rooms.forEach(room => {
+                    appData.distributors.filter(d => d.roomId === room.id).forEach(dist => {
+                        appData.branches.filter(b => b.distId === dist.id).forEach(branch => {
+                            branchOptions.push({
+                                id: branch.id,
+                                label: `${room.name} › ${dist.code} › ${branch.name}`
+                            });
+                        });
+                    });
+                });
+                
+                title.textContent = 'Berendezés Szerkesztése';
+                form.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Leágazás</label>
+                        <select class="form-select" id="eqBranch">
+                            ${branchOptions.map(b => `<option value="${b.id}" ${b.id === item.branchId ? 'selected' : ''}>${b.label}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mező</label>
+                        <input type="text" class="form-input" id="eqField" value="${item.field}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">KKS Kód</label>
+                        <input type="text" class="form-input" id="eqKks" value="${item.kks}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Berendezés Név</label>
+                        <input type="text" class="form-input" id="eqName" value="${item.name}">
+                    </div>
+                `;
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function saveModal() {
+            if (currentModalType === 'room') {
+                const name = document.getElementById('roomName').value.trim();
+                if (!name) {
+                    alert('Kérlek add meg a nevet!');
+                    return;
+                }
+                
+                if (editingItemId) {
+                    const item = appData.rooms.find(r => r.id === editingItemId);
+                    item.name = name;
+                } else {
+                    appData.rooms.push({
+                        id: 'room' + Date.now(),
+                        name: name
+                    });
+                }
+            } else if (currentModalType === 'distributorType') {
+                const roomId = document.getElementById('typeRoom').value;
+                const name = document.getElementById('typeName').value.trim();
+                
+                if (!name) {
+                    alert('Kérlek add meg a típus nevét!');
+                    return;
+                }
+                
+                if (editingItemId) {
+                    const item = appData.distributorTypes.find(t => t.id === editingItemId);
+                    item.roomId = roomId;
+                    item.name = name;
+                } else {
+                    appData.distributorTypes.push({
+                        id: 'type' + Date.now(),
+                        roomId: roomId,
+                        name: name
+                    });
+                }
+            } else if (currentModalType === 'distributorType-quick') {
+                const name = document.getElementById('typeName').value.trim();
+                
+                if (!name) {
+                    alert('Kérlek add meg a típus nevét!');
+                    return;
+                }
+                
+                appData.distributorTypes.push({
+                    id: 'type' + Date.now(),
+                    roomId: window.currentRoomId,
+                    name: name
+                });
+                
+                saveToLocalStorage();
+                renderHierarchy();
+                closeModal();
+                showEditRoomTypes(window.currentRoomId);
+                return;
+            } else if (currentModalType === 'distributor-quick') {
+                const code = document.getElementById('distCode').value.trim();
+                const name = document.getElementById('distName').value.trim();
+                const typeSelect = document.getElementById('distType');
+                const typeId = typeSelect ? typeSelect.value || null : (window.currentTypeId || null);
+                
+                if (!code || !name) {
+                    alert('Kérlek töltsd ki az összes mezőt!');
+                    return;
+                }
+                
+                appData.distributors.push({
+                    id: 'dist' + Date.now(),
+                    roomId: window.currentRoomId,
+                    typeId: typeId,
+                    code: code,
+                    name: name
+                });
+                
+                // Save and refresh views
+                saveToLocalStorage();
+                renderHierarchy();
+                closeModal();
+                // Refresh the appropriate view
+                if (typeId) {
+                    showEditTypeDistributors(typeId);
+                } else {
+                    showEditRoomTypes(window.currentRoomId);
+                }
+                return;
+            } else if (currentModalType === 'branch') {
+                const name = document.getElementById('branchName').value.trim();
+                if (!name) {
+                    alert('Kérlek add meg a nevet!');
+                    return;
+                }
+                
+                if (editingItemId) {
+                    const item = appData.branches.find(b => b.id === editingItemId);
+                    const distId = document.getElementById('branchDist') ? document.getElementById('branchDist').value : item.distId;
+                    item.distId = distId;
+                    item.name = name;
+                } else {
+                    // Use window.currentDistId if available (quick add), otherwise use select value
+                    const distId = window.currentDistId || document.getElementById('branchDist').value;
+                    appData.branches.push({
+                        id: 'br' + Date.now(),
+                        distId: distId,
+                        name: name
+                    });
+                    
+                    // If created via quick add, refresh the distributor branch view
+                    if (window.currentDistId) {
+                        saveToLocalStorage();
+                        renderHierarchy();
+                        closeModal();
+                        showEditDistBranches(window.currentDistId);
+                        return;
+                    }
+                }
+            } else if (currentModalType === 'equipment-quick') {
+                const field = document.getElementById('eqField').value.trim();
+                const kks = document.getElementById('eqKks').value.trim();
+                const name = document.getElementById('eqName').value.trim();
+                
+                if (!field || !name) {
+                    alert('Kérlek töltsd ki a kötelező mezőket!');
+                    return;
+                }
+                
+                // Check for duplicate KKS code (only if KKS is not empty)
+                if (kks) {
+                    const duplicate = appData.equipment.find(e => 
+                        e.kks && 
+                        e.kks.toLowerCase() === kks.toLowerCase()
+                    );
+                    
+                    if (duplicate) {
+                        const dupBranch = appData.branches.find(b => b.id === duplicate.branchId);
+                        const dupDist = dupBranch ? appData.distributors.find(d => d.id === dupBranch.distId) : null;
+                        const dupRoom = dupDist ? appData.rooms.find(r => r.id === dupDist.roomId) : null;
+                        
+                        const location = dupRoom && dupDist && dupBranch 
+                            ? dupRoom.name + ' › ' + dupDist.code + ' › ' + dupBranch.name
+                            : 'Ismeretlen hely';
+                        
+                        const confirmed = confirm(
+                            '⚠️ Ez a KKS kód (' + kks + ') már használatban van!\n\n' +
+                            'Helye: ' + location + '\n' +
+                            'Berendezés: ' + duplicate.name + '\n\n' +
+                            'Biztosan folytatod? (Ez megosztott KKS kód lesz)'
+                        );
+                        
+                        if (!confirmed) {
+                            return;
+                        }
+                    }
+                }
+                
+                appData.equipment.push({
+                    id: 'eq' + Date.now(),
+                    branchId: window.currentBranchId,
+                    field: field,
+                    kks: kks,
+                    name: name
+                });
+                
+                // Refresh the edit equipment view for this branch
+                saveToLocalStorage();
+                renderHierarchy();
+                closeModal();
+                showEditBranchEquipment(window.currentBranchId);
+                return;
+            } else if (currentModalType === 'distributor') {
+                const roomId = document.getElementById('distRoom').value;
+                const typeSelect = document.getElementById('distType');
+                const typeId = typeSelect ? (typeSelect.value || null) : null;
+                const code = document.getElementById('distCode').value.trim();
+                const name = document.getElementById('distName').value.trim();
+                
+                if (!code || !name) {
+                    alert('Kérlek töltsd ki az összes mezőt!');
+                    return;
+                }
+                
+                if (editingItemId) {
+                    const item = appData.distributors.find(d => d.id === editingItemId);
+                    item.roomId = roomId;
+                    item.typeId = typeId;
+                    item.code = code;
+                    item.name = name;
+                } else {
+                    appData.distributors.push({
+                        id: 'dist' + Date.now(),
+                        roomId: roomId,
+                        typeId: typeId,
+                        code: code,
+                        name: name
+                    });
+                }
+            } else if (currentModalType === 'equipment') {
+                const branchId = document.getElementById('eqBranch').value;
+                const field = document.getElementById('eqField').value.trim();
+                const kks = document.getElementById('eqKks').value.trim();
+                const name = document.getElementById('eqName').value.trim();
+                
+                if (!field || !name) {
+                    alert('Kérlek töltsd ki a kötelező mezőket!');
+                    return;
+                }
+                
+                // Check for duplicate KKS code (only if KKS is not empty)
+                if (kks) {
+                    const duplicate = appData.equipment.find(e => 
+                        e.kks && 
+                        e.kks.toLowerCase() === kks.toLowerCase() && 
+                        e.id !== editingItemId
+                    );
+                    
+                    if (duplicate) {
+                        const dupBranch = appData.branches.find(b => b.id === duplicate.branchId);
+                        const dupDist = dupBranch ? appData.distributors.find(d => d.id === dupBranch.distId) : null;
+                        const dupRoom = dupDist ? appData.rooms.find(r => r.id === dupDist.roomId) : null;
+                        
+                        const location = dupRoom && dupDist && dupBranch 
+                            ? dupRoom.name + ' › ' + dupDist.code + ' › ' + dupBranch.name
+                            : 'Ismeretlen hely';
+                        
+                        const confirmed = confirm(
+                            '⚠️ Ez a KKS kód (' + kks + ') már használatban van!\n\n' +
+                            'Helye: ' + location + '\n' +
+                            'Berendezés: ' + duplicate.name + '\n\n' +
+                            'Biztosan folytatod? (Ez megosztott KKS kód lesz)'
+                        );
+                        
+                        if (!confirmed) {
+                            return;
+                        }
+                    }
+                }
+                
+                if (editingItemId) {
+                    const item = appData.equipment.find(e => e.id === editingItemId);
+                    item.branchId = branchId;
+                    item.field = field;
+                    item.kks = kks;
+                    item.name = name;
+                } else {
+                    appData.equipment.push({
+                        id: 'eq' + Date.now(),
+                        branchId: branchId,
+                        field: field,
+                        kks: kks,
+                        name: name
+                    });
+                }
+            }
+            
+            // Determine what to refresh based on what was edited
+            let refreshContext = null;
+            if (editingItemId) {
+                if (currentModalType === 'room') {
+                    refreshContext = { type: 'rooms' };
+                } else if (currentModalType === 'distributorType') {
+                    const item = appData.distributorTypes.find(t => t.id === editingItemId);
+                    refreshContext = { type: 'distributorTypes', roomId: item ? item.roomId : null };
+                } else if (currentModalType === 'distributor') {
+                    const item = appData.distributors.find(d => d.id === editingItemId);
+                    refreshContext = { type: 'distributors', roomId: item ? item.roomId : null, typeId: item ? item.typeId : null };
+                } else if (currentModalType === 'branch') {
+                    const item = appData.branches.find(b => b.id === editingItemId);
+                    refreshContext = { type: 'branches', distId: item ? item.distId : null };
+                } else if (currentModalType === 'equipment') {
+                    const item = appData.equipment.find(e => e.id === editingItemId);
+                    refreshContext = { type: 'equipment', branchId: item ? item.branchId : null };
+                }
+            }
+            
+            saveToLocalStorage();
+            renderAll();
+            closeModal();
+            
+            // Refresh the current edit view if we edited something
+            if (refreshContext) {
+                if (refreshContext.type === 'rooms') {
+                    goBackToEditRooms();
+                } else if (refreshContext.type === 'distributorTypes' && refreshContext.roomId) {
+                    showEditRoomTypes(refreshContext.roomId);
+                } else if (refreshContext.type === 'distributors') {
+                    if (refreshContext.typeId) {
+                        showEditTypeDistributors(refreshContext.typeId);
+                    } else if (refreshContext.roomId) {
+                        showEditRoomTypes(refreshContext.roomId);
+                    }
+                } else if (refreshContext.type === 'branches' && refreshContext.distId) {
+                    showEditDistBranches(refreshContext.distId);
+                } else if (refreshContext.type === 'equipment' && refreshContext.branchId) {
+                    showEditBranchEquipment(refreshContext.branchId);
+                }
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('addEditModal').classList.remove('active');
+            currentModalType = null;
+            editingItemId = null;
+        }
+        
+        // ============= DETAIL MODAL =============
+        function showEquipmentDetail(equipmentId) {
+            const eq = appData.equipment.find(e => e.id === equipmentId);
+            if (!eq) return;
+            
+            const branch = appData.branches.find(b => b.id === eq.branchId);
+            const dist = branch ? appData.distributors.find(d => d.id === branch.distId) : null;
+            const room = dist ? appData.rooms.find(r => r.id === dist.roomId) : null;
+            
+            const modal = document.getElementById('detailModal');
+            const title = document.getElementById('detailModalTitle');
+            const content = document.getElementById('detailModalContent');
+            
+            title.textContent = eq.kks || '(KKS nélkül)';
+            content.innerHTML = `
+                <div class="detail-modal-row">
+                    <div class="detail-modal-label">Berendezés név</div>
+                    <div class="detail-modal-value">${eq.name}</div>
+                </div>
+                <div class="detail-modal-row">
+                    <div class="detail-modal-label">KKS kód</div>
+                    <div class="detail-modal-value">${eq.kks || '-'}</div>
+                </div>
+                <div class="detail-modal-row">
+                    <div class="detail-modal-label">Mező</div>
+                    <div class="detail-modal-value">${eq.field}</div>
+                </div>
+                <div class="detail-modal-row">
+                    <div class="detail-modal-label">Leágazás</div>
+                    <div class="detail-modal-value">${branch ? branch.name : 'N/A'}</div>
+                </div>
+                <div class="detail-modal-row">
+                    <div class="detail-modal-label">Elosztó</div>
+                    <div class="detail-modal-value">${dist ? dist.code + ' - ' + dist.name : 'N/A'}</div>
+                </div>
+                <div class="detail-modal-row">
+                    <div class="detail-modal-label">Kapcsolótér</div>
+                    <div class="detail-modal-value">${room ? room.name : 'N/A'}</div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+        
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+        
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const emptyState = document.getElementById('emptyState');
+            const backButton = document.getElementById('searchBackButton');
+            
+            searchInput.value = '';
+            searchResults.classList.remove('active');
+            searchResults.innerHTML = '';
+            emptyState.style.display = 'block';
+            backButton.style.display = 'none';
+        }
+        
+        function deleteItem(type, id) {
+            if (!confirm('Biztosan törölni szeretnéd?')) return;
+            
+            let refreshContext = null;
+            
+            if (type === 'room') {
+                // Delete related types, distributors, branches, equipment
+                const typeIds = appData.distributorTypes.filter(t => t.roomId === id).map(t => t.id);
+                const distIds = appData.distributors.filter(d => d.roomId === id).map(d => d.id);
+                const branchIds = appData.branches.filter(b => distIds.includes(b.distId)).map(b => b.id);
+                
+                appData.equipment = appData.equipment.filter(e => !branchIds.includes(e.branchId));
+                appData.branches = appData.branches.filter(b => !distIds.includes(b.distId));
+                appData.distributors = appData.distributors.filter(d => d.roomId !== id);
+                appData.distributorTypes = appData.distributorTypes.filter(t => t.roomId !== id);
+                appData.rooms = appData.rooms.filter(r => r.id !== id);
+                refreshContext = { type: 'rooms' };
+            } else if (type === 'distributorType') {
+                // Remove type from distributors but don't delete them
+                const typeItem = appData.distributorTypes.find(t => t.id === id);
+                const roomId = typeItem ? typeItem.roomId : null;
+                
+                appData.distributors.forEach(d => {
+                    if (d.typeId === id) {
+                        d.typeId = null;
+                    }
+                });
+                
+                appData.distributorTypes = appData.distributorTypes.filter(t => t.id !== id);
+                refreshContext = { type: 'distributorTypes', roomId: roomId };
+            } else if (type === 'distributor') {
+                // Delete related branches and equipment
+                const dist = appData.distributors.find(d => d.id === id);
+                const roomId = dist ? dist.roomId : null;
+                const typeId = dist ? dist.typeId : null;
+                const branchIds = appData.branches.filter(b => b.distId === id).map(b => b.id);
+                
+                appData.equipment = appData.equipment.filter(e => !branchIds.includes(e.branchId));
+                appData.branches = appData.branches.filter(b => b.distId !== id);
+                appData.distributors = appData.distributors.filter(d => d.id !== id);
+                refreshContext = { type: 'distributors', roomId: roomId, typeId: typeId };
+            } else if (type === 'branch') {
+                // Delete related equipment
+                const branch = appData.branches.find(b => b.id === id);
+                const distId = branch ? branch.distId : null;
+                appData.equipment = appData.equipment.filter(e => e.branchId !== id);
+                appData.branches = appData.branches.filter(b => b.id !== id);
+                refreshContext = { type: 'branches', distId: distId };
+            } else if (type === 'equipment') {
+                const equipment = appData.equipment.find(e => e.id === id);
+                const branchId = equipment ? equipment.branchId : null;
+                appData.equipment = appData.equipment.filter(e => e.id !== id);
+                refreshContext = { type: 'equipment', branchId: branchId };
+            }
+            
+            saveToLocalStorage();
+            renderAll();
+            
+            // Refresh the current edit view if we're in edit mode
+            if (refreshContext) {
+                if (refreshContext.type === 'rooms') {
+                    goBackToEditRooms();
+                } else if (refreshContext.type === 'distributorTypes' && refreshContext.roomId) {
+                    showEditRoomTypes(refreshContext.roomId);
+                } else if (refreshContext.type === 'distributors') {
+                    if (refreshContext.typeId) {
+                        showEditTypeDistributors(refreshContext.typeId);
+                    } else if (refreshContext.roomId) {
+                        showEditRoomTypes(refreshContext.roomId);
+                    }
+                } else if (refreshContext.type === 'branches' && refreshContext.distId) {
+                    showEditDistBranches(refreshContext.distId);
+                } else if (refreshContext.type === 'equipment' && refreshContext.branchId) {
+                    showEditBranchEquipment(refreshContext.branchId);
+                }
+            }
+        }
+        
+        // ============= EXPORT/IMPORT =============
+        function exportData() {
+            const dataStr = JSON.stringify(appData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'equipment_data_' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function importDataFromFile(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const imported = JSON.parse(event.target.result);
+                    
+                    console.log('📥 Import started...');
+                    console.log('Imported data:', imported);
+                    
+                    // Validálás: ellenőrizzük, hogy a szükséges mezők léteznek-e
+                    if (!imported.rooms || !imported.distributors || !imported.branches || !imported.equipment) {
+                        throw new Error('Hiányzó adatstruktúra (rooms, distributors, branches vagy equipment)');
+                    }
+                    
+                    // Ellenőrizzük, hogy tömbök-e
+                    if (!Array.isArray(imported.rooms) || !Array.isArray(imported.distributors) || 
+                        !Array.isArray(imported.branches) || !Array.isArray(imported.equipment)) {
+                        throw new Error('Helytelen adattípusok - minden mezőnek tömbnek kell lennie');
+                    }
+                    
+                    // Ha nincs distributorTypes mező, üres tömböt adunk hozzá
+                    if (!imported.distributorTypes) {
+                        imported.distributorTypes = [];
+                        console.log('ℹ️ distributorTypes mező nem található, üres tömbként inicializálva');
+                    } else if (!Array.isArray(imported.distributorTypes)) {
+                        console.warn('⚠️ distributorTypes nem tömb, üres tömbbé alakítva');
+                        imported.distributorTypes = [];
+                    } else {
+                        console.log('✅ distributorTypes betöltve:', imported.distributorTypes.length, 'típus');
+                    }
+                    
+                    // Backward compatibility: distributorokban typeId inicializálása
+                    if (imported.distributors && Array.isArray(imported.distributors)) {
+                        imported.distributors.forEach(dist => {
+                            if (dist.typeId === undefined) {
+                                dist.typeId = null;
+                                console.log('  → distributor', dist.code, 'typeId beállítva: null');
+                            }
+                        });
+                    }
+                    
+                    if (confirm('Ez felülírja az összes jelenlegi adatot! Folytatod?')) {
+                        // CRITICAL: Adatok beállítása
+                        appData.rooms = imported.rooms;
+                        appData.distributorTypes = imported.distributorTypes;
+                        appData.distributors = imported.distributors;
+                        appData.branches = imported.branches;
+                        appData.equipment = imported.equipment;
+                        
+                        console.log('✅ appData frissítve');
+                        console.log('  - rooms:', appData.rooms.length);
+                        console.log('  - distributorTypes:', appData.distributorTypes.length);
+                        console.log('  - distributors:', appData.distributors.length);
+                        console.log('  - branches:', appData.branches.length);
+                        console.log('  - equipment:', appData.equipment.length);
+                        
+                        // CRITICAL: LocalStorage mentés
+                        try {
+                            const dataStr = JSON.stringify(appData);
+                            localStorage.setItem('equipmentAppData', dataStr);
+                            console.log('💾 LocalStorage explicit mentés sikeres');
+                            
+                            // Verification - ellenőrizzük hogy tényleg ott van-e
+                            const verification = localStorage.getItem('equipmentAppData');
+                            if (verification) {
+                                const parsed = JSON.parse(verification);
+                                console.log('✅ LocalStorage verification OK:', {
+                                    rooms: parsed.rooms?.length || 0,
+                                    distributorTypes: parsed.distributorTypes?.length || 0,
+                                    distributors: parsed.distributors?.length || 0,
+                                    branches: parsed.branches?.length || 0,
+                                    equipment: parsed.equipment?.length || 0
+                                });
+                            } else {
+                                console.error('❌ HIBA: LocalStorage mentés sikertelen!');
+                                alert('HIBA: Az adatok nem kerültek mentésre! ❌');
+                                return;
+                            }
+                        } catch (err) {
+                            console.error('❌ LocalStorage save error:', err);
+                            alert('HIBA az adatok mentésekor! ❌\n\n' + err.message);
+                            return;
+                        }
+                        
+                        // UI AZONNAL frissítése - MINDEN renderelő függvényt meghívunk
+                        renderAll();
+                        updateStatistics();
+                        console.log('🎨 UI frissítve');
+                        
+                        // Ha a Hierarchy fül volt aktív, explicit újratöltjük
+                        const hierarchyTab = document.getElementById('hierarchyTab');
+                        if (hierarchyTab && hierarchyTab.classList.contains('active')) {
+                            renderHierarchy();
+                            console.log('📋 Hierarchia újratöltve');
+                        }
+                        
+                        // Ha az Edit fül volt aktív, explicit újratöltjük
+                        const editTab = document.getElementById('editTab');
+                        if (editTab && editTab.classList.contains('active')) {
+                            renderEditScreen();
+                            console.log('✏️ Szerkesztés újratöltve');
+                        }
+                        
+                        // Sikeres üzenet
+                        alert('Sikeres importálás! ✅\n\n' + 
+                              'Kapcsolóterek: ' + imported.rooms.length + '\n' +
+                              'Típusok: ' + imported.distributorTypes.length + '\n' +
+                              'Elosztók: ' + imported.distributors.length + '\n' +
+                              'Leágazások: ' + imported.branches.length + '\n' +
+                              'Berendezések: ' + imported.equipment.length);
+                    }
+                } catch (err) {
+                    console.error('❌ Import hiba:', err);
+                    console.error('Stack trace:', err.stack);
+                    alert('Hibás fájl formátum! ❌\n\n' + 
+                          'Részletek: ' + err.message + '\n\n' +
+                          'Kérlek ellenőrizd, hogy:\n' +
+                          '- A fájl valid JSON formátumú\n' +
+                          '- Tartalmazza a rooms, distributors, branches és equipment mezőket\n' +
+                          '- Minden mező tömb (array) típusú');
+                }
+                // Reset file input
+                input.value = '';
+            };
+            
+            // UTF-8 encoding beállítása
+            reader.readAsText(file, 'UTF-8');
+        }
+        
+        // ============= START APP =============
+        // PWA Install Prompt
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Show install banner
+            const installBanner = document.getElementById('installBanner');
+            const alreadyDismissed = localStorage.getItem('installPromptDismissed');
+            
+            if (!alreadyDismissed) {
+                setTimeout(() => {
+                    installBanner.classList.add('show');
+                }, 2000); // Show after 2 seconds
+            }
+        });
+        
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            
+            // Show the install prompt
+            deferredPrompt.prompt();
+            
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            
+            // Clear the deferredPrompt
+            deferredPrompt = null;
+            
+            // Hide the banner
+            document.getElementById('installBanner').classList.remove('show');
+        });
+        
+        document.getElementById('installClose').addEventListener('click', () => {
+            document.getElementById('installBanner').classList.remove('show');
+            localStorage.setItem('installPromptDismissed', 'true');
+        });
+        
+        // Detect if app is already installed
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ PWA telepítve!');
+            document.getElementById('installBanner').classList.remove('show');
+        });
+        
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+                    .then((registration) => {
+                        console.log('✅ Service Worker regisztrálva:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('❌ Service Worker regisztráció sikertelen:', error);
+                    });
+            });
+        }
+        
+        // ============= OFFLINE INDICATOR =============
+        function updateOnlineStatus() {
+            const indicator = document.getElementById('offlineIndicator');
+            const text = document.getElementById('offlineText');
+            
+            if (!navigator.onLine) {
+                indicator.classList.remove('hidden', 'online');
+                text.textContent = 'Offline mód';
+            } else {
+                indicator.classList.add('online');
+                indicator.classList.remove('hidden');
+                text.textContent = 'Online';
+                
+                // Hide after 3 seconds when online
+                setTimeout(() => {
+                    indicator.classList.add('hidden');
+                }, 3000);
+            }
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        
+        // Check on load
+        window.addEventListener('load', () => {
+            if (!navigator.onLine) {
+                updateOnlineStatus();
+            }
+        });
+        
+        // App will be initialized after password check
+        
+        // ============= BIBLICAL QUOTES =============
+        const biblicalQuotes = [
+            // Bátorítás, remény
+            "Ne félj, mert én veled vagyok; ne csüggedj, mert én vagyok Istened! (Ézsaiás 41:10)",
+            "Bízzál az Úrban teljes szívből, és ne a magad eszére támaszkodj! (Példabeszédek 3:5)",
+            "Tudom, milyen terveim vannak veletek, mondja az Úr: jó és nem rossz terveim vannak. (Jeremiás 29:11)",
+            "Az Úr az én világosságom és szabadító, kitől félnék? (Zsoltár 27:1)",
+            "Mindent megtehetek Krisztusban, aki megerősít engem. (Filippibeliek 4:13)",
+            "Akik az Úrban bíznak, újra erőre kapnak, szárnyra kelnek, mint a sasok. (Ézsaiás 40:31)",
+            "Az Úr harcolni fog értetek, ti pedig maradjatok veszteg! (2Mózes 14:14)",
+            "Legyetek erősek és bátrak! Ne féljetek, mert az Úr veletek jár. (5Mózes 31:6)",
+            "Azért mondom nektek: ne aggódjatok. Az Atya gondot visel rátok. (Máté 6:25)",
+            "Vessétek minden gondotokat őreá, mert neki gondja van rátok. (1Péter 5:7)",
+            "Boldog ember az, aki reménységét az Úrba helyezi. (Zsoltár 40:5)",
+            "Az Úr jósága új minden reggel, nagy a te hűséged! (Siralmak 3:23)",
+            "A reménység pedig nem szégyenít meg, mert az Isten szeretete kiáradt szívünkbe. (Róma 5:5)",
+            "Erősítsétek meg a lankadt kezeket, szilárdítsátok meg a tántorgó térdeket! (Ézsaiás 35:3)",
+            "Nem adott nekünk Isten félelemnek lelkét, hanem erőnek, szeretetnek és józanságnak lelkét. (2Timóteus 1:7)",
+            
+            // Béke, nyugalom
+            "Békességet hagyok rátok, az én békességemet adom nektek. (János 14:27)",
+            "Az Úr megáld téged békességgel. (4Mózes 6:26)",
+            "Légy csendes az Úr előtt, és várjál türelemmel rá! (Zsoltár 37:7)",
+            "Nyugodjatok meg és lássátok be, hogy én vagyok az Isten! (Zsoltár 46:11)",
+            "Az Úrban megnyugszom és békességben alszom. (Zsoltár 4:9)",
+            "Nagy békességük van azoknak, akik törvényedet szeretik. (Zsoltár 119:165)",
+            "Jöjjetek énhozzám mindnyájan, akik megfáradtatok, én megnyugvást adok nektek. (Máté 11:28)",
+            "Az Isten békéje őrizze meg szíveiteket és gondolataitokat. (Filippibeliek 4:7)",
+            "A béke Istene legyen mindnyájatokkal! (Róma 15:33)",
+            "A Lélek gyümölcse: szeretet, öröm, békesség. (Galata 5:22)",
+            "Az igaz békének vetése békességben terem az igazságot művelőknek. (Jakab 3:18)",
+            "Békességre törekszem minden emberrel. (Zsidók 12:14)",
+            "Boldogok a békességre igyekezők, mert ők az Isten fiainak neveztetnek. (Máté 5:9)",
+            "Amennyire tőletek telik, legyetek békességben minden emberrel. (Róma 12:18)",
+            "Ne búsulj, az Úr Isten van veled, amerre csak jársz. (Józsué 1:9)",
+            
+            // Bölcsesség, vezetés
+            "Az Úr félelme a bölcsesség kezdete. (Példabeszédek 9:10)",
+            "Ha valakinek nincs bölcsessége, kérje Istentől, aki készségesen ad mindenkinek. (Jakab 1:5)",
+            "Az igaz ösvényein vezet engem a nevéért. (Zsoltár 23:3)",
+            "Igéd lámpás az én lábamnak, és világosság az én ösvényemnek. (Zsoltár 119:105)",
+            "Tanítlak, és megmutatom, melyik úton kell járnod. (Zsoltár 32:8)",
+            "Boldog ember az, aki bölcsességet talál. (Példabeszédek 3:13)",
+            "A bölcsesség minden kincsek felett való. (Példabeszédek 8:11)",
+            "Ismerd meg őt minden utadon, és ő egyengetni fogja ösvényeidet. (Példabeszédek 3:6)",
+            "Az Úr Lelke rám száll: bölcsesség és értelem lelke. (Ézsaiás 11:2)",
+            "Kérjetek, és adatik nektek; keressetek, és találtok. (Máté 7:7)",
+            "Krisztusban rejlik a bölcsesség és az ismeret minden kincse. (Kolossé 2:3)",
+            "Bevezetem az országutakra a vakokat, és olyan utakon vezetem őket, amelyeket nem ismertek. (Ézsaiás 42:16)",
+            "Az Úr a te őrződ, jobbodon árnyékod. (Zsoltár 121:5)",
+            "Vezess engem a te igazságodban, és taníts engem! (Zsoltár 25:5)",
+            "Bizonyára jóság és kegyelem követ engem életem minden napján. (Zsoltár 23:6)",
+            
+            // Szeretet, könyörület
+            "Isten szeretet, és aki a szeretetben marad, az Istenben marad. (1János 4:16)",
+            "Úgy szerette Isten a világot, hogy egyszülött Fiát adta. (János 3:16)",
+            "A szeretet hosszútűrő, kegyes; a szeretet nem irigykedik. (1Korinthus 13:4)",
+            "Ő törődik velünk, mint apa az ő fiaival. (Zsoltár 103:13)",
+            "A szeretet sohasem szűnik meg. (1Korinthus 13:8)",
+            "Őt szeretjük, mert ő előbb szeretett minket. (1János 4:19)",
+            "Szeressétek ellenségeiteket, és imádkozzatok üldözőitekért. (Máté 5:44)",
+            "Új parancsolatot adok nektek: szeressétek egymást! (János 13:34)",
+            "Mindenekfelett pedig örökké szeressetek egymást! (1Péter 4:8)",
+            "Az Úr irgalmas és könyörületes, türelmes és nagy irgalmasságú. (Zsoltár 103:8)",
+            "Az Úr szeretete örökké való azokon, akik félik őt. (Zsoltár 103:17)",
+            "Senki sem lehet Isten szeretetének hatalmán kívül Krisztus Jézusban. (Róma 8:39)",
+            "Miként az Atya szeretett engem, én is úgy szerettelek titeket. (János 15:9)",
+            "Örökös szeretettel szerettelek téged. (Jeremiás 31:3)",
+            "Isten az ő szeretetét úgy mutatta meg rajtunk, hogy még bűnösök voltunk, amikor Krisztus meghalt értünk. (Róma 5:8)",
+            
+            // További bátorítás
+            "Ne csüggedj, mert én vagyok a te Istened. (Ézsaiás 41:10)",
+            "Az Úr melletted van mint hatalmas hős. (Sofóniás 3:17)",
+            "Boldog az az ember, akinek az Úr az ő bátorsága! (Zsoltár 84:6)",
+            "Az Úr az én erősségem és énekem, ő lett nékem szabadító. (2Mózes 15:2)",
+            "Az örök Isten a te hajlékod, alattad vannak örök karjai. (5Mózes 33:27)",
+            "Erősíts meg engem ígéreted szerint! (Zsoltár 119:28)",
+            "Jó az Úrban bízni, nem félni az embertől. (Zsoltár 118:8)",
+            "Az Úr erősítsen meg benneteket minden jó cselekedetre. (2Thesszalonika 2:17)",
+            "Az Úr a mi oltalmunk és pajzsunk, ő a mi segítségünk és védelmünk. (Zsoltár 33:20)",
+            "Hozzád folyamodom, Uram, erősségem! (Zsoltár 18:2)",
+            
+            // További béke
+            "Békességben fekszem le és alszom el, mert egyedül te, Uram, tartasz meg engem biztonságban. (Zsoltár 4:9)",
+            "Isten nem a visszavonás Istene, hanem a békességé. (1Korinthus 14:33)",
+            "A Lélek békességet teremt, mert az élet és békesség. (Róma 8:6)",
+            "Törekedjetek a békességre, mert így láthatjátok meg az Urat! (Zsidók 12:14)",
+            "Amikor az ember útjai tetsznek az Úrnak, még ellenségeit is békességre hagyja vele. (Példabeszédek 16:7)",
+            "Az örök béke Fejedelme ő. (Ézsaiás 9:6)",
+            "Igazság és béke egymásra talál. (Zsoltár 85:11)",
+            "Békesség lesz az ő trónjának alapja és gyámola. (Ézsaiás 9:6)",
+            "A békesség gyümölcse az igazság vetése. (Jakab 3:18)",
+            "Békességet szerezz a te népednek! (Zsoltár 29:11)",
+            
+            // További bölcsesség
+            "A bölcsesség főbb minden kincsnél. (Példabeszédek 4:7)",
+            "Az ember szíve terveket kovácsol, de az Úr igazítja lépteit. (Példabeszédek 16:9)",
+            "Aki nem botlik a beszédében, tökéletes ember az. (Jakab 3:2)",
+            "Az okos ember meghallgatja a tanácsot. (Példabeszédek 12:15)",
+            "Aki szereti a fenyítést, szereti a tudományt. (Példabeszédek 12:1)",
+            "Az igazak ösvénye olyan, mint a hajnali fény. (Példabeszédek 4:18)",
+            "Megbölcsülök az Úr intése által. (Zsoltár 19:8)",
+            "Az Úr vezet téged szüntelen. (Ézsaiás 58:11)",
+            "Isten útja tökéletes, az Úr beszéde tiszta. (Zsoltár 18:31)",
+            "Tested egészséges lesz, ha az Úr útján jársz. (Példabeszédek 3:8)",
+            
+            // További szeretet és könyörület
+            "Az Úr könyörületes minden teremtményéhez. (Zsoltár 145:9)",
+            "Isten gazdag az irgalomban. (Efézus 2:4)",
+            "Az Úr irgalmassága nem fogyott el, jóvolta nem ért véget. (Siralmak 3:22)",
+            "Az irgalmasokhoz irgalmas vagy. (Zsoltár 18:26)",
+            "Irgalmat akarok, nem áldozatot. (Máté 9:13)",
+            "Kegyelmet nyertek, azért kegyelmet gyakoroljatok! (Kolossé 3:13)",
+            "Az Úr, az irgalmas és könyörületes Isten. (2Mózes 34:6)",
+            "Az irgalmasság diadalmaskodik az ítéleten. (Jakab 2:13)",
+            "Viseljétek egymás terhét! (Galata 6:2)",
+            "Legyetek egymáshoz jók, irgalmasak. (Efézus 4:32)"
+        ];
+        
+        let currentQuoteIndex = 0;
+        
+        function changeQuote() {
+            const quoteElement = document.getElementById('biblicalQuote');
+            if (!quoteElement) return;
+            
+            // Random választás
+            const randomIndex = Math.floor(Math.random() * biblicalQuotes.length);
+            currentQuoteIndex = randomIndex;
+            
+            // Idézet frissítése galamb emoji-kkal
+            quoteElement.textContent = `🕊️ ${biblicalQuotes[currentQuoteIndex]} 🕊️`;
+            
+            // Újraindítjuk az animációt
+            quoteElement.style.animation = 'none';
+            setTimeout(() => {
+                quoteElement.style.animation = 'fadeInOut 8s ease-in-out';
+            }, 10);
+        }
+        
+        // Első idézet megjelenítése
+        setTimeout(() => {
+            changeQuote();
+            // 8 másodpercenként új idézet (az animáció időzítéséhez igazítva)
+            setInterval(changeQuote, 8000);
+        }, 500);
+    </script>
+</body>
+</html>
